@@ -1,0 +1,11 @@
+@reference "../../globals.css";
+
+.table {
+    @apply min-w-full table-fixed divide-y divide-gray-200;
+}
+
+.table tr,
+.table th,
+.table td {
+    @apply h-12 align-middle text-center;
+}

@@ -1,0 +1,11 @@
+/* styles.module.css */
+@reference "../../app/globals.css";
+
+.sidebarLink {
+    @apply flex items-center w-full px-4 py-2 my-1 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors space-x-3; /* ← adds 0.75rem (12px) gap between icon, label & badge */
+}
+
+.badge {
+    @apply inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white 
+         bg-[#06044B] rounded-full;
+}
