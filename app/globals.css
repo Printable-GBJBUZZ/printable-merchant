@@ -1,2 +1,132 @@
 @import "tailwindcss";
 
+:root {
+	--dm-sans: "DM Sans";
+	--white: #ffffff;
+	font-size: 16px;
+	font-family: "DM Sans";
+}
+
+@theme {
+	--color-printable-green: #61e987;
+}
+
+@layer components {
+	.heading {
+		@apply font-bold text-4xl text-white;
+	}
+
+	.subHeading {
+		@apply font-normal text-white;
+	}
+
+	.text {
+		@apply text-white font-normal;
+	}
+
+	.inputDiv {
+		@apply flex flex-col gap-1 justify-center flex-1;
+	}
+
+	.inputLabel {
+		@apply flex items-center gap-1 text-white font-normal;
+	}
+
+	.input {
+		@apply rounded-lg border border-white p-2 text-white font-normal;
+	}
+
+	.continueButton {
+		@apply flex justify-center items-center px-6 py-2 rounded-full  font-medium;
+	}
+
+	.continueButton.allowed {
+		@apply cursor-pointer bg-printable-green;
+	}
+
+	.continueButton.notAllowed {
+		@apply cursor-not-allowed bg-[#61e9888d];
+	}
+
+	.serviceButton {
+		@apply border border-dotted text-white rounded-lg px-4 py-2;
+	}
+
+	.serviceButton.selected {
+		@apply border-gray-300;
+	}
+
+	.serviceButton.notSelected {
+		@apply border-[#555555];
+	}
+}
+
+body {
+	background-color: #06044b;
+	overflow-x: hidden;
+}
+
+.ellipse1 {
+	position: absolute;
+	width: 379px;
+	height: 379px;
+	top: -145px;
+	right: -61px;
+	background: #61e987;
+	filter: blur(275px);
+	border-radius: 100%;
+	z-index: -10;
+}
+
+.ellipse2 {
+	position: absolute;
+	width: 379px;
+	height: 379px;
+	left: -33px;
+	bottom: -141px;
+	background: #61e987;
+	filter: blur(275px);
+	border-radius: 100%;
+	z-index: -10;
+}
+
+.brandName {
+	font-weight: 700;
+	font-size: 36px;
+	color: var(--white);
+}
+
+.timingsDay {
+	color: #ffffff;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 100%;
+	font-family: var(--dm-sans);
+	height: 22px;
+}
+
+.timingsOpen {
+	color: #ffffff;
+	height: 22px;
+	font-weight: 500;
+	font-family: var(--dm-sans);
+	line-height: 100%;
+	letter-spacing: -2%;
+}
+
+.timingsTo {
+	color: #ffffff;
+	height: 22px;
+	font-weight: 500;
+	font-family: var(--dm-sans);
+	line-height: 100%;
+	letter-spacing: -2%;
+}
+
+.timingsTime {
+	color: #ffffff;
+	font-family: var(--dm-sans);
+	padding: 10px 15px;
+	border: 1px solid #ffffff;
+	border-radius: 4px;
+}
