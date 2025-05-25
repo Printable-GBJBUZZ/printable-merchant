@@ -182,7 +182,7 @@ const MessageFakeData2: MessageType[][] = [
 ];
 
 
-export default function MainDashBoard() {
+// export default function MainDashBoard() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [message, setMessage] = useState<string>("");
 
@@ -211,11 +211,11 @@ export default function MainDashBoard() {
 
   return (
     <div className="flex w-full h-full">
-      <LeftMainDashBoard 
-        onSelect={setSelectedIndex} 
-        conversations={MessageFakeData2}  
+      <LeftMainDashBoard
+        onSelect={setSelectedIndex}
+        conversations={MessageFakeData2}
       />
-      <RightMainDashBoard 
+      <RightMainDashBoard
         data={currentMessages}
         onChange={handleChange}
         onSubmit={handleSend}
