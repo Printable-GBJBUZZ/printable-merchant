@@ -144,7 +144,7 @@ export default function StoreSetup() {
 
         try {
           const response = await fetch(
-            "http://localhost:5000/api/file/upload",
+            `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/file/upload`,
             {
               method: "POST",
               body: imageFormData,
