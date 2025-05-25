@@ -92,6 +92,9 @@ export default function TimingsPage() {
         },
       );
       const response = await result.json();
+      if (response.merchant.id == user?.id) {
+        router.push("/");
+      }
       console.log(response);
     } catch (error) {
       console.error("error creating the user", error);
