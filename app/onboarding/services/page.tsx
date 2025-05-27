@@ -6,7 +6,7 @@ import { useOnboarding } from "@/contexts/OnboardingContext";
 import ContinueButton from "@/components/ContinueButton/ContinueButton";
 
 const availableServices = [
-  "Black and White ",
+  "Black and White",
   "Color Print",
   "College Journal",
   "Binding",

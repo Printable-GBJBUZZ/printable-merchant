@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
 import ToggleSwitch from "@/components/ToggleSwitch/ToggleSwitch";
 import { useUser } from "@clerk/nextjs";
+import { Exo_2 } from "next/font/google";
+import { json } from "node:stream/consumers";
 const daysOfWeek = [
   "Monday",
   "Tuesday",
@@ -34,13 +36,18 @@ export interface MerchantPayload {
   shopName: string;
   shopImages: string[];
 }
-
 export default function TimingsPage() {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { user, isLoaded } = useUser();
   const { data, updateTimings } = useOnboarding();
   const [timings, setTimings] = useState(defaultTimings);
-
+  const mapServiceId: { [key: string]: string } = {
+    "Black and White": "svc_1",
+    "Color Print": "svc_2",
+    "College Journal": "svc_5",
+    Binding: "svc_6",
+  };
   useEffect(() => {
     if (!data.setup.storeName || !data.setup.storeAddress) {
       router.push("/onboarding/setup");
@@ -68,14 +75,15 @@ export default function TimingsPage() {
   };
 
   const handleFinish = async () => {
+    setLoading(true);
+    let response;
     try {
+      // 1) Create merchant
       const result = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/merchant`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             id: user?.id,
             userId: user?.id,
@@ -91,13 +99,78 @@ export default function TimingsPage() {
           }),
         },
       );
-      const response = await result.json();
-      if (response.merchant.id == user?.id) {
-        router.push("/");
+      response = await result.json();
+      console.log("Created merchant:", response);
+    } catch (err) {
+      console.error("Error creating merchant:", err);
+      return; // bail out early
+    }
+
+    // 2) Only proceed if IDs match
+    if (response?.merchant?.id === user?.id) {
+      // 2a) Create merchant services
+      try {
+        const servicePromises = data.services.map((service) => {
+          return fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/service/merchant`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                id: `${user.id}_${mapServiceId[service]}`,
+                merchantId: user.id,
+                serviceId: mapServiceId[service],
+              }),
+            },
+          ).then(async (res) => {
+            if (!res.ok) {
+              const text = await res.text();
+              console.error(`Service ${service} failed:`, text);
+              throw new Error(`Failed to create service ${service}`);
+            }
+            console.log(`Service ${service} created`);
+          });
+        });
+
+        await Promise.all(servicePromises);
+      } catch (err) {
+        console.error("Error creating services:", err);
+        return;
       }
-      console.log(response);
-    } catch (error) {
-      console.error("error creating the user", error);
+
+      // 2b) Create pricing rules
+      try {
+        const pricingPromises = data.services.map((service) => {
+          return fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/service/pricing`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" }, // ← FIXED
+              body: JSON.stringify({
+                id: `${user.id}_${mapServiceId[service]}_pricing`,
+                merchantServiceId: `${user.id}_${mapServiceId[service]}`,
+                price: 0,
+                attributes: { paper_size: "A4" },
+              }),
+            },
+          ).then(async (res) => {
+            if (!res.ok) {
+              const text = await res.text();
+              console.error(`Pricing for ${service} failed:`, text);
+              throw new Error(`Failed to create pricing for ${service}`);
+            }
+            console.log(`Pricing for ${service} created`);
+          });
+        });
+
+        await Promise.all(pricingPromises);
+        setLoading(false);
+        router.push("/");
+      } catch (err) {
+        console.error("Error creating pricing rules:", err);
+      }
+    } else {
+      console.warn("Merchant ID mismatch—skipping services & pricing.");
     }
   };
 
@@ -168,7 +241,7 @@ export default function TimingsPage() {
                   onClick={handleFinish}
                   className="continueButton cursor-pointer bg-[#61e987]"
                 >
-                  Finish
+                  {loading ? "Loading..." : "Finish"}
                 </button>
               ) : null}
             </div>

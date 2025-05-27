@@ -35,9 +35,5 @@ export default function Home() {
 
     getMerchant(user.id);
   }, [isLoaded, user?.id]);
-  return (
-    <div className=" h-full">
-      <Dashboard />
-    </div>
-  );
+  return <Dashboard />;
 }
