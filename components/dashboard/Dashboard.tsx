@@ -163,7 +163,7 @@ export default function Dashboard() {
               <span>Recent Orders</span>
               <span className="text-[#007AFF] text-sm">View All</span>
             </div>
-            <div className="overflow-x-auto mt-4">
+            <div className=" w-full mt-4">
               <Table />
             </div>
 

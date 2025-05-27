@@ -31,9 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html className=" h-screen" lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} h-screen ${geistMono.variable} antialiased`}
         >
           {/* <header className="flex justify-end items-center p-4 gap-4 h-16">
             <SignedIn>
