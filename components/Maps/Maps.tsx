@@ -23,7 +23,7 @@ export default function Maps({ streetAddress, onLocationChange }: MapsProps) {
 
 	const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
-	// 1) Get user’s current geo on mount
+	// Get user's current location on mount
 	useEffect(() => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
@@ -42,7 +42,7 @@ export default function Maps({ streetAddress, onLocationChange }: MapsProps) {
 		}
 	}, [onLocationChange]);
 
-	// 2) When streetAddress prop changes, geocode it
+	// Geocode the provided address
 	useEffect(() => {
 		if (!streetAddress) return;
 
@@ -63,7 +63,7 @@ export default function Maps({ streetAddress, onLocationChange }: MapsProps) {
 		});
 	}, [streetAddress, onLocationChange]);
 
-	// 3) Autocomplete handlers (for manual input)
+	// Handle place autocomplete
 	const onLoad = useCallback((auto: google.maps.places.Autocomplete) => {
 		autocompleteRef.current = auto;
 	}, []);
@@ -82,14 +82,24 @@ export default function Maps({ streetAddress, onLocationChange }: MapsProps) {
 		}
 	}, [onLocationChange]);
 
+	// 🌟 Handle map click for pin placement
+	const handleMapClick = useCallback(
+		(e: google.maps.MapMouseEvent) => {
+			if (e.latLng) {
+				const coords = {
+					lat: e.latLng.lat(),
+					lng: e.latLng.lng(),
+				};
+				setLocation(coords);
+				onLocationChange?.(coords);
+			}
+		},
+		[onLocationChange]
+	);
+
 	return (
-		<LoadScript
-			googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}
-			libraries={["places"]}>
-			<GoogleMap
-				mapContainerStyle={containerStyle}
-				center={location}
-				zoom={14}>
+		<LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!} libraries={["places"]}>
+			<GoogleMap mapContainerStyle={containerStyle} center={location} zoom={14} onClick={handleMapClick}>
 				<Marker position={location} />
 			</GoogleMap>
 		</LoadScript>

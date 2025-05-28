@@ -244,7 +244,7 @@ export default function StoreSetup() {
   }, [formData.images]);
 
   return (
-    <div className="flex items-center justify-center px-4 mt-10">
+    <div className="flex items-center justify-center px-4 my-10">
       <div className="w-full max-w-6xl flex flex-col md:flex-row md:gap-4 lg:gap-8">
         {/* Left Column: Form */}
         <div className="flex flex-col space-y-8 flex-1">
@@ -263,7 +263,7 @@ export default function StoreSetup() {
                 <label
                   key={idx}
                   className={`relative bg-[#61E98740] border-[0.5px] border-dotted border-[#61E987]
-                                   min-h-[102px] flex-1 rounded-[10px] flex justify-center items-center
+                                   min-h-[102px] max-h-[102px] flex-1 rounded-[10px] flex justify-center items-center
                                    overflow-hidden ${isUploading ? "cursor-not-allowed" : "cursor-pointer"}`}
                 >
                   {formData.images[idx] ? (
@@ -370,7 +370,7 @@ export default function StoreSetup() {
               Point out your store location for better results
             </p>
           </div>
-          <div className="flex-1 rounded border border-gray-300 min-h-[300px] md:min-h-full">
+          <div className="flex-1 rounded border border-gray-300">
             <div className="w-full h-full ">
               <Maps
                 streetAddress={formData.street}
