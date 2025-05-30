@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
+import {OrderProvider} from "@/contexts/orderContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,6 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
+    <OrderProvider>
       <html className=" h-screen" lang="en">
         <body
           className={`${geistSans.variable} h-screen ${geistMono.variable} antialiased`}
@@ -43,6 +45,7 @@ export default function RootLayout({
           {children}
         </body>
       </html>
+      </OrderProvider>
     </ClerkProvider>
   );
 }

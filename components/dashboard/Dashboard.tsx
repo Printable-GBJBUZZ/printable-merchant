@@ -1,7 +1,7 @@
-import Header from "@/components/Header/Header";
-import KPICard from "@/components/KPICard/KPICard";
-import Sidebar from "@/components/Sidebar/Sidebar";
-import Table from "./Table/Table";
+import Header from "@/Components/Header/Header";
+import KPICard from "@/Components/KPICard/KPICard";
+import Sidebar from "@/Components/Sidebar/Sidebar";
+import OrderTable from "@/Components/dashboard/Table";
 
 const kpiCards = [
   {
@@ -164,7 +164,7 @@ export default function Dashboard() {
               <span className="text-[#007AFF] text-sm">View All</span>
             </div>
             <div className=" w-full mt-4">
-              <Table />
+              <OrderTable />
             </div>
 
             {/* Recent Orders End */}
