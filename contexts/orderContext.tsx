@@ -52,7 +52,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   const [order, setOrder] = useState<MerchantOrder[]>([]);
 
   const addOrder = (orders: MerchantOrder[]) =>
-    setOrder((prev) => [...prev, ...orders]);
+    setOrder((prev) => [...orders, ...prev]);
 
   const updateOrder = (id: string, updateParams: any) => {
     setOrder((prev) =>

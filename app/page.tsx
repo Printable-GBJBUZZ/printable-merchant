@@ -5,6 +5,8 @@ import { useEffect, useState, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
 import Dashboard from "@/components/dashboard/Dashboard";
 import { useOrder } from "@/contexts/orderContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import {PusherClient} from "@/pusher/pusher"
 import pusherClient from "@/pusher/pusher";
 
@@ -28,7 +30,10 @@ export default function Home() {
     // const pusher = pusherRef.current;
     if (!pusherClient) return;
     const channel = pusherClient.subscribe(`merchant-${user?.id}`);
-    channel.bind("new-order", (data: any) => addOrder([data.order]));
+    channel.bind("new-order", (data: any) => {
+      toast.success("🥳🥳 You got a new Order!! Hurry up🏃‍♂️");
+      addOrder([data.order]);
+    });
 
     return () => {
       console.log("Cleaning up Pusher subscription");
@@ -87,5 +92,10 @@ export default function Home() {
     return <div>Loading...</div>;
   }
 
-  return <Dashboard />;
+  return (
+    <div className="merchant_dashboard">
+      <ToastContainer />
+      <Dashboard />
+    </div>
+  );
 }
