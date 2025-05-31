@@ -65,7 +65,7 @@ const OrdersOverview: React.FC = () => {
 
   const [orderData, setOrderData] = useState<MerchantOrder | null>(null);
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(
-    null
+    null,
   );
   const [error, setError] = useState<string | null>(null);
 
@@ -105,7 +105,7 @@ const OrdersOverview: React.FC = () => {
     console.log("order:", order); // Debug: Log order array
     if (orderNo && order) {
       const foundOrder = order.find(
-        (item: MerchantOrder) => item.id === orderNo
+        (item: MerchantOrder) => item.id === orderNo,
       );
       console.log("foundOrder:", foundOrder); // Debug: Log found order
       if (foundOrder) {
@@ -209,10 +209,13 @@ const OrdersOverview: React.FC = () => {
                         <div className="font-semibold text-[13px]">
                           {doc.fileName}
                         </div>
+                        <div className="p-2 bg-blue-500 text-white rounded w-38">
+                          <a className=" text-white w-38" href={doc.fileUrl} download={doc.fileName}>Download Document</a>
+                        </div>
                         <div className="text-[11px]">
                           Item No:{" "}
                           <span className="font-bold">{doc.itemNo}</span>
-                        </div>
+                        </div>>
                         <div className="text-[11px] text-gray-500">
                           Copies: {doc.copies}
                         </div>
