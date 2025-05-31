@@ -1,6 +1,6 @@
-import Header from "@/Components/Header/Header";
-import KPICard from "@/Components/KPICard/KPICard";
-import Sidebar from "@/Components/Sidebar/Sidebar";
+import Header from "../Header/Header";
+import KPICard from "../KPICard/KPICard";
+import Sidebar from "../Sidebar/Sidebar";
 import OrderTable from "@/Components/dashboard/Table";
 
 const kpiCards = [

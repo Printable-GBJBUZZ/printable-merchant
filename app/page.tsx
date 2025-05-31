@@ -17,15 +17,15 @@ export default function Home() {
     async function getMerchant(userId: string) {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/merchant/${user?.id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/merchant/${user?.id}`,
         );
+        console.log(response);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        console.log("Merchant data:", data);
-
-        if (data.error === "Merchant not found") {
+        const res = await response.json();
+        console.log("Merchant data:", res);
+        if (res.data.length == 0) {
           // Use a stable navigation approach
           router.replace("/onboarding/setup");
         }
@@ -38,7 +38,7 @@ export default function Home() {
   }, [isLoaded, user?.id, router]);
 
   return (
-    <div className="merchant_dashboard">
+    <div className="merchant_dashboard h-full">
       <Dashboard />
     </div>
   );
