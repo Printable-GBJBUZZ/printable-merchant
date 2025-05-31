@@ -14,17 +14,17 @@ type StoreSetup = {
   storeAddress: StoreAddress;
   longitude: number;
   latitude: number;
-  images: string[]; // Array of image files
+  images: string[];
 };
 
 type OnboardingData = {
   setup: StoreSetup;
-  services: string[]; // Array of service names
+  services: string[];
   timings: {
     day: string;
     isOpen: boolean;
-    open: string; // e.g., '09:00 AM'
-    close: string; // e.g., '09:00 PM'
+    open: string;
+    close: string;
   }[];
 };
 
@@ -53,7 +53,7 @@ const defaultData: OnboardingData = {
 };
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(
-  undefined,
+  undefined
 );
 
 export const OnboardingProvider = ({

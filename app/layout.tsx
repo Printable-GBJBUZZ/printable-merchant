@@ -3,6 +3,8 @@ import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
 import "./globals.css";
 
+import { OnboardingProvider } from "@/contexts/OnboardingContext"; // Make sure this path is correct
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -31,16 +33,18 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html className=" h-screen" lang="en">
+      <html className="h-screen" lang="en">
         <body
-          className={`${geistSans.variable} h-screen ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} antialiased h-screen`}
         >
-          {/* <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header> */}
-          {children}
+          <OnboardingProvider>
+            {/* <header className="flex justify-end items-center p-4 gap-4 h-16">
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </header> */}
+            {children}
+          </OnboardingProvider>
         </body>
       </html>
     </ClerkProvider>
