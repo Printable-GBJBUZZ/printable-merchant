@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, DM_Sans } from "next/font/google";
 import { ClerkProvider, SignedIn, UserButton } from "@clerk/nextjs";
-import {OrderProvider} from "@/contexts/orderContext";
+import { OrderProvider } from "@/contexts/orderContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import GlobalPusherListener from "@/pusher/globalPusherListener";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,19 +35,22 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-    <OrderProvider>
-      <html className=" h-screen" lang="en">
-        <body
-          className={`${geistSans.variable} h-screen ${geistMono.variable} antialiased`}
-        >
-          {/* <header className="flex justify-end items-center p-4 gap-4 h-16">
+      <OrderProvider>
+        <html className=" h-screen" lang="en">
+          <body
+            className={`${geistSans.variable} h-screen ${geistMono.variable} antialiased`}
+          >
+            {/* <header className="flex justify-end items-center p-4 gap-4 h-16">
             <SignedIn>
               <UserButton />
             </SignedIn>
           </header> */}
-          {children}
-        </body>
-      </html>
+
+            {children}
+            <ToastContainer />
+            <GlobalPusherListener />
+          </body>
+        </html>
       </OrderProvider>
     </ClerkProvider>
   );

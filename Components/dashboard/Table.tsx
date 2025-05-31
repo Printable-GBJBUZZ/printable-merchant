@@ -1,7 +1,9 @@
 import React, { useMemo, useState } from "react";
 import { PenBoxIcon, Printer, User } from "lucide-react";
-import { useOrder } from "@/contexts/orderContext";
+import { MerchantOrder, useOrder } from "@/contexts/orderContext";
 import { toast, ToastContainer } from "react-toastify";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface TableDataProps {
   orderNo: string;
@@ -12,8 +14,8 @@ interface TableDataProps {
 }
 
 const Table = () => {
-  const { order, updateOrder } = useOrder();
-  // State to track loading for each button (keyed by orderNo and action)
+  const { order, updateOrder, loading } = useOrder(); // Added loading from context
+  const router = useRouter();
   const [loadingStates, setLoadingStates] = useState<{
     [key: string]: boolean;
   }>({});
@@ -35,7 +37,6 @@ const Table = () => {
   }, [order]);
 
   const handleOrderUpdate = async (orderId: string, status: string) => {
-    // Set loading state for this specific button
     setLoadingStates((prev) => ({ ...prev, [`${orderId}-${status}`]: true }));
     try {
       const res = await fetch(
@@ -51,7 +52,7 @@ const Table = () => {
 
       if (res.status === 200) {
         toast.success(
-          `Order ${status == "processing" ? "Accepted" : "Cancelled"}`
+          `Order ${status === "processing" ? "Accepted" : "Cancelled"}`
         );
       } else {
         console.log(res);
@@ -61,7 +62,6 @@ const Table = () => {
       console.log(error);
       toast.error("An error occurred");
     } finally {
-      // Clear loading state for this specific button
       updateOrder(orderId, { status });
       setLoadingStates((prev) => ({
         ...prev,
@@ -86,6 +86,15 @@ const Table = () => {
     }
   };
 
+  // Render loading spinner if loading is true
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <ToastContainer />
@@ -96,6 +105,7 @@ const Table = () => {
           }
         }
       `}</style>
+
       <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
         <thead className="bg-gray-200">
           <tr>
@@ -124,10 +134,11 @@ const Table = () => {
         </thead>
         <tbody className="divide-y divide-gray-200">
           {tableData.length > 0 ? (
-            tableData.map((data) => (
+            tableData.map((data, index) => (
               <tr
-                key={data.orderNo}
+                key={index}
                 className="hover:bg-gray-50 transition-colors cursor-pointer"
+                onClick={() => router.push(`/orders-overview/${data.orderNo}`)}
               >
                 <td className="py-4 px-4 text-sm text-gray-600">
                   {data.orderNo}
@@ -166,7 +177,7 @@ const Table = () => {
                         >
                           Accept
                           {loadingStates[`${data.orderNo}-processing`] && (
-                            <span className="inline-block w-4 h-4 border-2 border-green-500 border-t-transparent rounded-full animate-[spin_1s_linear_infinite] ml-2"></span>
+                            <span className="inline-block w-4 h-4 border-2 border-green-500 border-t-transparent rounded-full animate-spin ml-2"></span>
                           )}
                         </button>
                         <button
@@ -178,17 +189,17 @@ const Table = () => {
                         >
                           Deny
                           {loadingStates[`${data.orderNo}-cancelled`] && (
-                            <span className="inline-block w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-[spin_1s_linear_infinite] ml-2"></span>
+                            <span className="inline-block w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin ml-2"></span>
                           )}
                         </button>
                       </>
                     ) : data.status !== "pending" &&
                       data.status !== "cancelled" ? (
-                      <button className="px-3 py-1  text-green-500  opacity-75 cursor-not-allowed">
+                      <button className="px-3 py-1 text-green-500 opacity-75 cursor-not-allowed">
                         Accepted
                       </button>
                     ) : (
-                      <button className="px-3 py-1  text-red-500 pacity-75 cursor-not-allowed">
+                      <button className="px-3 py-1 text-red-500 opacity-75 cursor-not-allowed">
                         Denied
                       </button>
                     )}
