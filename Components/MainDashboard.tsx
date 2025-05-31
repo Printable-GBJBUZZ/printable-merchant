@@ -102,7 +102,7 @@ const MessageFakeData2: MessageType[][] = [
       sender: "Emily Wang",
       time: "03:22 PM",
       text: "Perfect, thanks! We need to finalize this by tomorrow.",
-    }
+    },
   ],
   [
     {
@@ -119,7 +119,7 @@ const MessageFakeData2: MessageType[][] = [
       sender: "Michael Rodriguez",
       time: "03:50 PM",
       text: "All smooth. Performance metrics look good too.",
-    }
+    },
   ],
   [
     {
@@ -136,7 +136,7 @@ const MessageFakeData2: MessageType[][] = [
       sender: "Sarah Chen",
       time: "04:07 PM",
       text: "The authentication section seems outdated. Should we update it?",
-    }
+    },
   ],
   [
     {
@@ -148,7 +148,7 @@ const MessageFakeData2: MessageType[][] = [
       sender: "Me",
       time: "04:35 PM",
       text: "Send over the details, I'll prioritize it.",
-    }
+    },
   ],
   [
     {
@@ -165,7 +165,7 @@ const MessageFakeData2: MessageType[][] = [
       sender: "Rachel Kim",
       time: "05:07 PM",
       text: "Great! Let me know if any changes are needed.",
-    }
+    },
   ],
   [
     {
@@ -177,17 +177,17 @@ const MessageFakeData2: MessageType[][] = [
       sender: "Me",
       time: "05:32 PM",
       text: "Yes, 10 AM works for me.",
-    }
-  ]
+    },
+  ],
 ];
 
-
-// export default function MainDashBoard() {
+export default function MainDashBoard() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [message, setMessage] = useState<string>("");
 
   // Ensure we have valid data
-  const currentMessages = selectedIndex !== null ? MessageFakeData2[selectedIndex] : [];
+  const currentMessages =
+    selectedIndex !== null ? MessageFakeData2[selectedIndex] : [];
 
   // Function to handle message input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -201,7 +201,10 @@ const MessageFakeData2: MessageType[][] = [
       // Add the new message to the selected conversation
       const newMessage: MessageType = {
         sender: "Me",
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
         text: message,
       };
       MessageFakeData2[selectedIndex!].push(newMessage);
