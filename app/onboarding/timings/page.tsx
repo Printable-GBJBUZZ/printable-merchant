@@ -60,17 +60,17 @@ export default function TimingsPage() {
 
   const handleToggle = (index: number) => {
     setTimings((prev) =>
-      prev.map((t, i) => (i === index ? { ...t, isOpen: !t.isOpen } : t)),
+      prev.map((t, i) => (i === index ? { ...t, isOpen: !t.isOpen } : t))
     );
   };
 
   const handleTimeChange = (
     index: number,
     field: "open" | "close",
-    value: string,
+    value: string
   ) => {
     setTimings((prev) =>
-      prev.map((t, i) => (i === index ? { ...t, [field]: value } : t)),
+      prev.map((t, i) => (i === index ? { ...t, [field]: value } : t))
     );
   };
 
@@ -97,7 +97,7 @@ export default function TimingsPage() {
             shopName: data.setup.storeName,
             shopImages: data.setup.images,
           }),
-        },
+        }
       );
       response = await result.json();
       console.log("Created merchant:", response);
@@ -121,7 +121,7 @@ export default function TimingsPage() {
                 merchantId: user.id,
                 serviceId: mapServiceId[service],
               }),
-            },
+            }
           ).then(async (res) => {
             if (!res.ok) {
               const text = await res.text();
@@ -152,7 +152,7 @@ export default function TimingsPage() {
                 price: 0,
                 attributes: { paper_size: "A4" },
               }),
-            },
+            }
           ).then(async (res) => {
             if (!res.ok) {
               const text = await res.text();

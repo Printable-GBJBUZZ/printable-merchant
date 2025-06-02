@@ -76,7 +76,7 @@ export default function StoreSetup() {
 
   const handleImageChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
+    index: number
   ) => {
     const file = e.target.files?.[0] ?? null;
     const currentImageInSlot = formData.images[index];
@@ -85,7 +85,9 @@ export default function StoreSetup() {
       // Check file size
       if (file.size > MAX_FILE_SIZE_BYTES) {
         alert(
-          `File "${file.name}" (${(file.size / 1024 / 1024).toFixed(2)}MB) is too large. Maximum allowed size is ${MAX_FILE_SIZE_MB}MB.`,
+          `File "${file.name}" (${(file.size / 1024 / 1024).toFixed(
+            2
+          )}MB) is too large. Maximum allowed size is ${MAX_FILE_SIZE_MB}MB.`
         );
         e.target.value = ""; // Clear the file input to allow re-selection
 
@@ -148,13 +150,13 @@ export default function StoreSetup() {
             {
               method: "POST",
               body: imageFormData,
-            },
+            }
           );
 
           if (!response.ok) {
             const errorData = await response.text();
             console.error(
-              `Failed to upload image: ${imageFile.name}. Server response: ${errorData}`,
+              `Failed to upload image: ${imageFile.name}. Server response: ${errorData}`
             );
             allUploadsSuccessful = false;
             break;
@@ -164,7 +166,7 @@ export default function StoreSetup() {
             uploadedImageIds.push(result.fileUrl);
           } else {
             console.error(
-              `Upload succeeded for ${imageFile.name} but no fileId or fileUrl in response.`,
+              `Upload succeeded for ${imageFile.name} but no fileId or fileUrl in response.`
             );
             allUploadsSuccessful = false;
             break;
@@ -198,7 +200,7 @@ export default function StoreSetup() {
       router.push("/onboarding/services");
     } else {
       alert(
-        "Some images could not be uploaded. Please check image sizes and try again.",
+        "Some images could not be uploaded. Please check image sizes and try again."
       );
     }
   };
@@ -211,7 +213,7 @@ export default function StoreSetup() {
         longitude: coords.lng,
       }));
     },
-    [],
+    []
   );
 
   useEffect(() => {
@@ -234,7 +236,7 @@ export default function StoreSetup() {
   useEffect(() => {
     const currentImagesWithPreviews = formData.images.filter(
       (img): img is File & { preview: string } =>
-        img !== null && typeof (img as any).preview === "string",
+        img !== null && typeof (img as any).preview === "string"
     );
     return () => {
       currentImagesWithPreviews.forEach((file) => {
@@ -264,7 +266,11 @@ export default function StoreSetup() {
                   key={idx}
                   className={`relative bg-[#61E98740] border-[0.5px] border-dotted border-[#61E987]
                                    min-h-[102px] max-h-[102px] flex-1 rounded-[10px] flex justify-center items-center
-                                   overflow-hidden ${isUploading ? "cursor-not-allowed" : "cursor-pointer"}`}
+                                   overflow-hidden ${
+                                     isUploading
+                                       ? "cursor-not-allowed"
+                                       : "cursor-pointer"
+                                   }`}
                 >
                   {formData.images[idx] ? (
                     <img

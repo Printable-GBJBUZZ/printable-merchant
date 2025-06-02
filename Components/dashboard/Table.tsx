@@ -49,6 +49,7 @@ const Table = () => {
           body: JSON.stringify({ status }),
         }
       );
+      console.log("response:", res);
 
       if (res.status === 200) {
         toast.success(
