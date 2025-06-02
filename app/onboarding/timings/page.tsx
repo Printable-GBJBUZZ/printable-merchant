@@ -3,7 +3,7 @@
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import ToggleSwitch from "@/components/ToggleSwitch/ToggleSwitch";
+import ToggleSwitch from "@/Components/ToggleSwitch/ToggleSwitch";
 import { useUser } from "@clerk/nextjs";
 import { Exo_2 } from "next/font/google";
 import { json } from "node:stream/consumers";
@@ -117,8 +117,8 @@ export default function TimingsPage() {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                id: `${user.id}_${mapServiceId[service]}`,
-                merchantId: user.id,
+                id: `${user?.id}_${mapServiceId[service]}`,
+                merchantId: user?.id,
                 serviceId: mapServiceId[service],
               }),
             }
@@ -147,8 +147,8 @@ export default function TimingsPage() {
               method: "POST",
               headers: { "Content-Type": "application/json" }, // ← FIXED
               body: JSON.stringify({
-                id: `${user.id}_${mapServiceId[service]}_pricing`,
-                merchantServiceId: `${user.id}_${mapServiceId[service]}`,
+                id: `${user?.id}_${mapServiceId[service]}_pricing`,
+                merchantServiceId: `${user?.id}_${mapServiceId[service]}`,
                 price: 0,
                 attributes: { paper_size: "A4" },
               }),

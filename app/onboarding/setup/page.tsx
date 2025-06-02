@@ -5,9 +5,9 @@ import { useOnboarding } from "@/contexts/OnboardingContext";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import Maps from "@/components/Maps/Maps";
-import ContinueButton from "@/components/ContinueButton/ContinueButton";
-import InputDiv from "@/components/InputDiv/InputDiv";
+import Maps from "@/Components/Maps/Maps";
+import ContinueButton from "@/Components/ContinueButton/ContinueButton";
+import InputDiv from "@/Components/InputDiv/InputDiv";
 
 // Define the maximum file size
 const MAX_FILE_SIZE_MB = 3;

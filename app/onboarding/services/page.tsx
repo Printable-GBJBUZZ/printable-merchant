@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import ContinueButton from "@/components/ContinueButton/ContinueButton";
+import ContinueButton from "@/Components/ContinueButton/ContinueButton";
 
 const availableServices = [
   "Black and White",
@@ -29,7 +29,7 @@ export default function ServicesPage() {
     setSelectedServices((prev) =>
       prev.includes(service)
         ? prev.filter((s) => s !== service)
-        : [...prev, service],
+        : [...prev, service]
     );
   };
 

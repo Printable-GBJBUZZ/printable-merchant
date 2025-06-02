@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import NavBar from "@/Components/NavBar/NavBar";
 import { useEffect, useState, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
-import Dashboard from "@/components/dashboard/Dashboard";
+import Dashboard from "@/Components/dashboard/Dashboard";
 
 export default function Home() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function Home() {
     async function getMerchant(userId: string) {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/merchant/${user?.id}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/merchant/${user?.id}`
         );
         console.log(response);
         if (!response.ok) {
