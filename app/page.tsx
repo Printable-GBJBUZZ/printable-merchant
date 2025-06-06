@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import NavBar from "@/Components/NavBar/NavBar";
 import { useEffect, useState, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
-import Dashboard from "@/Components/dashboard/Dashboard";
+import Dashboard from "@/components/dashboard/Dashboard";
 
 export default function Home() {
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function Home() {
         }
         const res = await response.json();
         console.log("Merchant data:", res);
-        if (res.data.length == 0) {
+        if (res.data.shopName == null) {
           // Use a stable navigation approach
           router.replace("/onboarding/setup");
         }

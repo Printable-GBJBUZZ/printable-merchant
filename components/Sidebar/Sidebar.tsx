@@ -1,5 +1,5 @@
 import React from "react";
-import SidebarLink from "@/Components/SidebarLink/SidebarLink";
+import SidebarLink from "@/components/SidebarLink/SidebarLink";
 import Image from "next/image";
 import DashboardIcon from "@/icons/Dashboard/DashboardIcon";
 import OrderIcon from "@/icons/Order/OrderIcon";

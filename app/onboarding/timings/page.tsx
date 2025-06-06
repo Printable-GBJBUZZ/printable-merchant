@@ -3,7 +3,7 @@
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import ToggleSwitch from "@/Components/ToggleSwitch/ToggleSwitch";
+import ToggleSwitch from "@/components/ToggleSwitch/ToggleSwitch";
 import { useUser } from "@clerk/nextjs";
 import { Exo_2 } from "next/font/google";
 import { json } from "node:stream/consumers";

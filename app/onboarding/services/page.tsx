@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useOnboarding } from "@/contexts/OnboardingContext";
-import ContinueButton from "@/Components/ContinueButton/ContinueButton";
+import ContinueButton from "@/components/ContinueButton/ContinueButton";
 
 const availableServices = [
   "Black and White",
