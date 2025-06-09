@@ -86,6 +86,7 @@ export default function TimingsPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             id: user?.id,
+            name: user?.fullName,
             userId: user?.id,
             email: user?.primaryEmailAddress?.emailAddress,
             phone: user?.primaryPhoneNumber?.phoneNumber,

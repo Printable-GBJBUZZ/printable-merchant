@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import NotificationDropDown from "./NotificationDropDown";
+import { useUser } from "@clerk/nextjs";
 function NavBar() {
   const [currentDateTime, setCurrentDateTime] = useState<string>("");
-
+  const { user } = useUser();
   useEffect(() => {
     // Function to update the date and time
     const updateDateTime = () => {
