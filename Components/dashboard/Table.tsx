@@ -4,13 +4,17 @@ import { useOrder } from "@/contexts/orderContext";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import StatusDropdown from "./statusDropDown";
-
+interface document {
+  fileName: string;
+  fileUrl: string;
+}
 interface TableDataProps {
   orderNo: string;
   customer: { name: string; email: string };
   type: string;
   status: string;
   amount: number;
+  documents: document[] | [];
 }
 
 const Table = () => {
@@ -32,8 +36,34 @@ const Table = () => {
       type: items.type ?? "Paper",
       status: items.status ?? "pending",
       amount: Number(items.totalAmount ?? 0),
+      documents: items.documents.map((doc) => ({
+        fileName: doc.fileName,
+        fileUrl: doc.fileUrl,
+      })),
     }));
   }, [order]);
+  const handleDownload = (document: document[]) => {
+    document.forEach(async (doc) => {
+      const response = await fetch(doc.fileUrl, {
+        method: "GET",
+        headers: {
+          Accept: "application/octet-stream",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch file: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = window.document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", doc.fileName);
+      window.document.body.appendChild(link);
+      link.click();
+    });
+  };
 
   const handleOrderUpdate = async (orderId: string, status: string) => {
     setLoadingStates((prev) => ({
@@ -195,7 +225,10 @@ const Table = () => {
                     <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
                       <PenBoxIcon className="w-5 h-5 text-gray-600" />
                     </button>
-                    <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
+                    <button
+                      className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                      onClick={() => handleDownload(data.documents)}
+                    >
                       <Printer className="w-5 h-5 text-gray-600" />
                     </button>
                   </div>
