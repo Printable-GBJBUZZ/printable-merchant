@@ -2,8 +2,11 @@
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useOrder } from "@/contexts/orderContext";
+import { FaArrowLeft, FaDownload } from "react-icons/fa6";
+import { toast, ToastContainer } from "react-toastify";
+import StatusDropdown from "@/Components/dashboard/statusDropDown";
 
 interface DocumentDetails {
   fileName: string;
@@ -58,16 +61,44 @@ interface Document extends DocumentDetails {
 const OrdersOverview: React.FC = () => {
   const params = useParams();
   const orderNo = params.orderNo as string | null;
-  const { order } = useOrder();
-  useEffect(() => {
-    console.log(order);
-  }, [order]);
+  const { order, updateOrder } = useOrder();
+  const router = useRouter();
+  console.log(order);
 
   const [orderData, setOrderData] = useState<MerchantOrder | null>(null);
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(
-    null,
+    null
   );
   const [error, setError] = useState<string | null>(null);
+  const [loadingStates, setLoadingStates] = useState<{
+    [key: string]: { isLoading: boolean; newStatus: string | null };
+  }>({});
+
+  // File icon handler
+  const getFileIcon = (fileName: string) => {
+    const fileExtension = fileName.split(".").pop()?.toLowerCase();
+    switch (fileExtension) {
+      case "pdf":
+        return "/Images/PDF.png";
+      case "xls":
+      case "xlsx":
+        return "/Images/XL.png";
+      case "doc":
+      case "docx":
+        return "/Images/DOC.png";
+      case "ppt":
+      case "pptx":
+        return "/Images/POINT.png";
+      case "jpg":
+      case "jpeg":
+      case "png":
+      case "gif":
+      case "bmp":
+        return "/Images/JPG.png";
+      default:
+        return "/Images/JPG.png";
+    }
+  };
 
   // Transform MerchantOrder documents to Document format for UI
   const transformDocuments = (order: MerchantOrder): Document[] => {
@@ -83,7 +114,7 @@ const OrdersOverview: React.FC = () => {
       itemNo: `CNF${order.id}${index + 1}`,
       price: `₹ ${(doc.copies * 50).toFixed(2)}`,
       status: order.status,
-      imageSrc: doc.fileUrl || "https://via.placeholder.com/64",
+      imageSrc: getFileIcon(doc.fileName),
       paymentDetails: {
         subtotal: `₹ ${(doc.copies * 50).toFixed(2)}`,
         pickupFee: order.fulfillmentType === "pickup" ? "₹ 0.00" : "₹ 50.00",
@@ -95,23 +126,19 @@ const OrdersOverview: React.FC = () => {
       },
       mapSrc:
         order.latitude && order.longitude
-          ? `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119064.90027594799!2d${order.longitude}!3d${order.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z${order.city}%2C%20${order.state}!5e0!3m2!1sen!2sin!4v1747767266267!5m2!1sen!2sin`
+          ? `https://www.google.com/maps?q=${order.latitude},${order.longitude}&hl=es;z=14&output=embed`
           : "https://via.placeholder.com/408x270",
     }));
   };
 
   useEffect(() => {
-    console.log("orderNo:", orderNo); // Debug: Log orderNo
-    console.log("order:", order); // Debug: Log order array
     if (orderNo && order) {
       const foundOrder = order.find(
-        (item: MerchantOrder) => item.id === orderNo,
+        (item: MerchantOrder) => item.id === orderNo
       );
-      console.log("foundOrder:", foundOrder); // Debug: Log found order
       if (foundOrder) {
         setOrderData(foundOrder);
         const documents = transformDocuments(foundOrder);
-        console.log("documents:", documents); // Debug: Log transformed documents
         if (documents.length > 0) {
           setSelectedDocument(documents[0]);
         } else {
@@ -130,6 +157,55 @@ const OrdersOverview: React.FC = () => {
     setSelectedDocument(doc);
   };
 
+  // Download handler
+  const handleDownload = (
+    fileUrl: string,
+    fileName: string,
+    e: React.MouseEvent
+  ) => {
+    e.stopPropagation();
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.download = fileName;
+    link.click();
+  };
+
+  // Order update handler
+  const handleOrderUpdate = async (orderId: string, status: string) => {
+    setLoadingStates((prev) => ({
+      ...prev,
+      [orderId]: { isLoading: true, newStatus: status },
+    }));
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/order/${orderId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: status.toLowerCase() }),
+        }
+      );
+
+      if (res.status === 200) {
+        toast.success(`Order updated to ${status}`);
+        updateOrder(orderId, { status });
+        setOrderData((prev) => (prev ? { ...prev, status } : null));
+      } else {
+        toast.error("Failed to update order");
+      }
+    } catch (error) {
+      toast.error("An error occurred");
+    } finally {
+      setLoadingStates((prev) => ({
+        ...prev,
+        [orderId]: { isLoading: false, newStatus: null },
+      }));
+    }
+  };
+
   if (error) {
     return <div className="text-red-500 p-6">{error}</div>;
   }
@@ -140,10 +216,18 @@ const OrdersOverview: React.FC = () => {
 
   return (
     <div className="bg-[#E6E7F0] p-6 min-h-screen">
+      <ToastContainer />
       <div className="mx-auto">
         {/* Header */}
         <header className="flex justify-between items-center mb-6">
-          <h1 className="text-xl font-semibold text-black">Orders</h1>
+          <div className="flex gap-2 items-center justify-center">
+            <FaArrowLeft
+              size={20}
+              className="text-black hover:cursor-pointer"
+              onClick={() => router.push("/")}
+            />
+            <h1 className="text-xl font-semibold text-black">Orders</h1>
+          </div>
           <p className="text-sm text-gray-600">
             Orders /{" "}
             <span className="text-[#06044B] font-semibold">
@@ -165,17 +249,52 @@ const OrdersOverview: React.FC = () => {
                 Order ID: <span className="font-bold">#{orderData.id}</span>
               </div>
               <div className="hidden sm:block border-l border-gray-300 h-5 mx-4"></div>
-              <div className="text-gray-700 text-sm mt-2 sm:mt-0">
-                Order Date & Time:{" "}
-                {new Date(orderData.createdAt).toLocaleString()}
+              <div className="flex flex-col text-gray-700 text-sm mt-2 sm:mt-0">
+                <span>Order Date & Time</span>
+                <span>
+                  {new Date(orderData.createdAt).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </span>
               </div>
               <div className="flex space-x-2 ml-auto mt-3 sm:mt-0">
-                <div className="text-[10px] font-semibold text-black bg-yellow-400 rounded-full px-3 py-1 flex items-center">
-                  Priority: High
-                </div>
-                <div className="text-[10px] font-semibold text-[#a97fff] bg-[#f0e6ff] rounded-full px-3 py-1 flex items-center">
-                  {orderData.status}
-                </div>
+                {orderData.status === "pending" ? (
+                  <div className="flex gap-2">
+                    <button
+                      className="px-3 py-1 border border-green-500 text-green-500 bg-green-50 rounded-full hover:bg-green-100 transition-colors flex items-center text-[10px] font-semibold"
+                      onClick={() => handleOrderUpdate(orderData.id, "Queued")}
+                      disabled={loadingStates[orderData.id]?.isLoading}
+                    >
+                      Accept
+                      {loadingStates[orderData.id]?.isLoading &&
+                        loadingStates[orderData.id]?.newStatus === "Queued" && (
+                          <span className="inline-block w-4 h-4 border-2 border-green-500 border-t-transparent rounded-full animate-spin ml-2"></span>
+                        )}
+                    </button>
+                    <button
+                      className="px-3 py-1 border border-red-500 text-red-500 bg-red-50 rounded-full hover:bg-red-100 transition-colors flex items-center text-[10px] font-semibold"
+                      onClick={() =>
+                        handleOrderUpdate(orderData.id, "Cancelled")
+                      }
+                      disabled={loadingStates[orderData.id]?.isLoading}
+                    >
+                      Deny
+                      {loadingStates[orderData.id]?.isLoading &&
+                        loadingStates[orderData.id]?.newStatus ===
+                          "cancelled" && (
+                          <span className="inline-block w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full animate-spin ml-2"></span>
+                        )}
+                    </button>
+                  </div>
+                ) : orderData.status === "cancelled" ? (
+                  <button className="px-3 py-1 text-red-500 opacity-75 cursor-not-allowed text-[10px] font-semibold">
+                    Denied
+                  </button>
+                ) : (
+                  <StatusDropdown orderId={orderData.id} />
+                )}
               </div>
             </div>
             {/* Main content grid */}
@@ -209,30 +328,21 @@ const OrdersOverview: React.FC = () => {
                         <div className="font-semibold text-[13px]">
                           {doc.fileName}
                         </div>
-                        <div className="p-2 bg-blue-500 text-white rounded w-38">
-                          <a className=" text-white w-38" href={doc.fileUrl} download={doc.fileName}>Download Document</a>
-                        </div>
                         <div className="text-[11px]">
                           Item No:{" "}
                           <span className="font-bold">{doc.itemNo}</span>
-                        </div>>
+                        </div>
                         <div className="text-[11px] text-gray-500">
                           Copies: {doc.copies}
                         </div>
                       </div>
-                      <div className="ml-auto font-semibold text-[13px] flex items-center space-x-2">
-                        <span>{doc.price}</span>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          className="bi bi-check2-circle text-green-500"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
-                          <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
-                        </svg>
+                      <div className="ml-auto flex justify-end items-center">
+                        <FaDownload
+                          size={20}
+                          onClick={(e) =>
+                            handleDownload(doc.fileUrl, doc.fileName, e)
+                          }
+                        />
                       </div>
                     </a>
                   </div>
@@ -248,7 +358,7 @@ const OrdersOverview: React.FC = () => {
                     <img
                       alt="Customer avatar"
                       className="w-10 h-10 rounded"
-                      src="https://via.placeholder.com/40"
+                      src="https://storage.googleapis.com/a1aa/image/aebc22dc-dc01-4178-d55a-c9f4268f3b46.jpg"
                       width="40"
                       height="40"
                     />

@@ -4,6 +4,7 @@ import { useOrder } from "@/contexts/orderContext";
 import { toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import StatusDropdown from "./statusDropDown";
+
 interface document {
   fileName: string;
   fileUrl: string;
@@ -42,6 +43,7 @@ const Table = () => {
       })),
     }));
   }, [order]);
+
   const handleDownload = (document: document[]) => {
     document.forEach(async (doc) => {
       const response = await fetch(doc.fileUrl, {
@@ -70,6 +72,7 @@ const Table = () => {
       ...prev,
       [orderId]: { isLoading: true, newStatus: status },
     }));
+
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/order/${orderId}`,
@@ -78,19 +81,19 @@ const Table = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ status }),
+          body: JSON.stringify({ status: status.toLowerCase() }),
         }
       );
 
       if (res.status === 200) {
         toast.success(`Order updated to ${status}`);
+        updateOrder(orderId, { status });
       } else {
         toast.error("Failed to update order");
       }
     } catch (error) {
       toast.error("An error occurred");
     } finally {
-      updateOrder(orderId, { status });
       setLoadingStates((prev) => ({
         ...prev,
         [orderId]: { isLoading: false, newStatus: null },
@@ -175,21 +178,21 @@ const Table = () => {
                       <button
                         className="px-3 py-1 border border-green-500 text-green-500 bg-green-50 rounded-full hover:bg-green-100 transition-colors flex items-center"
                         onClick={() =>
-                          handleOrderUpdate(data.orderNo, "processing")
+                          handleOrderUpdate(data.orderNo, "Queued")
                         }
                         disabled={loadingStates[data.orderNo]?.isLoading}
                       >
                         Accept
                         {loadingStates[data.orderNo]?.isLoading &&
                           loadingStates[data.orderNo]?.newStatus ===
-                            "processing" && (
+                            "Queued" && (
                             <span className="inline-block w-4 h-4 border-2 border-green-500 border-t-transparent rounded-full animate-spin ml-2"></span>
                           )}
                       </button>
                       <button
                         className="px-3 py-1 border border-red-500 text-red-500 bg-red-50 rounded-full hover:bg-red-100 transition-colors flex items-center"
                         onClick={() =>
-                          handleOrderUpdate(data.orderNo, "cancelled")
+                          handleOrderUpdate(data.orderNo, "Cancelled")
                         }
                         disabled={loadingStates[data.orderNo]?.isLoading}
                       >
@@ -206,15 +209,7 @@ const Table = () => {
                       Denied
                     </button>
                   ) : (
-                    <StatusDropdown
-                      orderId={data.orderNo}
-                      currentStatus={data.status}
-                      onUpdate={handleOrderUpdate}
-                      isLoading={
-                        loadingStates[data.orderNo]?.isLoading || false
-                      }
-                      newStatus={loadingStates[data.orderNo]?.newStatus || null}
-                    />
+                    <StatusDropdown orderId={data.orderNo} />
                   )}
                 </td>
                 <td className="py-4 px-4 text-sm text-gray-600">

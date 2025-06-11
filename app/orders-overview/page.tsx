@@ -8,48 +8,48 @@ import { useRouter } from "next/navigation";
 import { FaArrowLeft, FaDownload } from "react-icons/fa6";
 import { Status } from "@/Components/Status/page";
 
-const order = [ //Currently im using this mock data but in real data came from useOrderhook 
-                //functionality already added all you need to use only useOrder hook
-    {
-      id: "order_001",
-      userId: "user_123",
-      merchantId: "merchant_456",
-      status: "processing",
-      totalAmount: 150.0,
-      paymentMethod: "UPI",
-      scheduledPrintTime: "2025-06-11T10:00:00Z",
-      createdAt: "2025-06-10T09:00:00Z",
-      updatedAt: "2025-06-10T09:30:00Z",
-      fulfillmentType: "pickup",
-      state: "Delhi",
-      city: "New Delhi",
-      address: "123 Main Street, Connaught Place",
-      latitude: "28.6139",
-      longitude: "77.2090",
-      documents: [
-        {
-          fileName: "resume.pdf",
-          fileUrl: "https://example.com/documents/resume.pdf",
-          copies: 2,
-          colorType: "black_and_white",
-          paperType: "A4",
-          printType: "front",
-          pageDirection: "vertical",
-        },
+const order = [
+  //Currently im using this mock data but in real data came from useOrderhook
+  //functionality already added all you need to use only useOrder hook
+  {
+    id: "order_001",
+    userId: "user_123",
+    merchantId: "merchant_456",
+    status: "processing",
+    totalAmount: 150.0,
+    paymentMethod: "UPI",
+    scheduledPrintTime: "2025-06-11T10:00:00Z",
+    createdAt: "2025-06-10T09:00:00Z",
+    updatedAt: "2025-06-10T09:30:00Z",
+    fulfillmentType: "pickup",
+    state: "Delhi",
+    city: "New Delhi",
+    address: "123 Main Street, Connaught Place",
+    latitude: "28.6139",
+    longitude: "77.2090",
+    documents: [
+      {
+        fileName: "resume.pdf",
+        fileUrl: "https://example.com/documents/resume.pdf",
+        copies: 2,
+        colorType: "black_and_white",
+        paperType: "A4",
+        printType: "front",
+        pageDirection: "vertical",
+      },
 
-        {
-          fileName: "project_report.xls",
-          fileUrl: "https://example.com/documents/project_report.pptx",
-          copies: 1,
-          colorType: "color",
-          paperType: "Letter",
-          printType: "front_and_back",
-          pageDirection: "horizontal",
-        },
-      ],
-    },
-
-  ]
+      {
+        fileName: "project_report.xls",
+        fileUrl: "https://example.com/documents/project_report.pptx",
+        copies: 1,
+        colorType: "color",
+        paperType: "Letter",
+        printType: "front_and_back",
+        pageDirection: "horizontal",
+      },
+    ],
+  },
+];
 
 const OrdersOverview: React.FC = () => {
   // Assuming useOrder hook gives you the orders
