@@ -9,10 +9,29 @@ const Header = ({ shopName, name }: HeaderProps) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
-    const interval = setInterval(() => setCurrentTime(new Date()), 60000);
-    return () => clearInterval(interval);
+    const IntervalId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(IntervalId);
   }, []);
-  console.log(shopName, name);
+
+  const formatDate = (date: Date): string => {
+    const options: Intl.DateTimeFormatOptions = {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    };
+    return date.toLocaleDateString("en-GB", options);
+  };
+
+  const formatTime = (date: Date): string => {
+    return date.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
   return (
     <div className="flex justify-between items-center bg-white rounded-2xl px-4 h-16">
       <div className="w-60">
@@ -22,17 +41,12 @@ const Header = ({ shopName, name }: HeaderProps) => {
           className="bg-[#E6E6ED] rounded-3xl px-4 py-2 w-full"
         />
       </div>
-      {currentTime.toLocaleString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-      })}
-
       <div className="flex items-center">
         <div className="flex gap-6 items-center">
-          <p className="flex gap-3 items-center"></p>
+          <p className="flex gap-3 items-center">
+            <span>{formatDate(currentTime)}</span>
+            <span>{formatTime(currentTime)}</span>
+          </p>
           <div className="flex gap-4 items-center">
             <div>
               <svg

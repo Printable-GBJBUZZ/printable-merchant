@@ -60,17 +60,17 @@ export default function TimingsPage() {
 
   const handleToggle = (index: number) => {
     setTimings((prev) =>
-      prev.map((t, i) => (i === index ? { ...t, isOpen: !t.isOpen } : t))
+      prev.map((t, i) => (i === index ? { ...t, isOpen: !t.isOpen } : t)),
     );
   };
 
   const handleTimeChange = (
     index: number,
     field: "open" | "close",
-    value: string
+    value: string,
   ) => {
     setTimings((prev) =>
-      prev.map((t, i) => (i === index ? { ...t, [field]: value } : t))
+      prev.map((t, i) => (i === index ? { ...t, [field]: value } : t)),
     );
   };
 
@@ -80,13 +80,17 @@ export default function TimingsPage() {
     try {
       // 1) Create merchant
       const result = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/merchant`,
+        `${process.env.NEXT_PUBLIC_BACKEND_ROOT_URL}/api/merchant/${user?.id}`,
         {
-          method: "POST",
+          method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             id: user?.id,
+<<<<<<< HEAD
             name: user?.fullName,
+=======
+
+>>>>>>> bf6783b4d107ec363bb9aa5f4a3bcb1610580218
             userId: user?.id,
             email: user?.primaryEmailAddress?.emailAddress,
             phone: user?.primaryPhoneNumber?.phoneNumber,
@@ -98,7 +102,7 @@ export default function TimingsPage() {
             shopName: data.setup.storeName,
             shopImages: data.setup.images,
           }),
-        }
+        },
       );
       response = await result.json();
       console.log("Created merchant:", response);
@@ -118,11 +122,11 @@ export default function TimingsPage() {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                id: `${user.id}_${mapServiceId[service]}`,
-                merchantId: user.id,
+                id: `${user?.id}_${mapServiceId[service]}`,
+                merchantId: user?.id,
                 serviceId: mapServiceId[service],
               }),
-            }
+            },
           ).then(async (res) => {
             if (!res.ok) {
               const text = await res.text();
@@ -148,12 +152,12 @@ export default function TimingsPage() {
               method: "POST",
               headers: { "Content-Type": "application/json" }, // ← FIXED
               body: JSON.stringify({
-                id: `${user.id}_${mapServiceId[service]}_pricing`,
-                merchantServiceId: `${user.id}_${mapServiceId[service]}`,
+                id: `${user?.id}_${mapServiceId[service]}_pricing`,
+                merchantServiceId: `${user?.id}_${mapServiceId[service]}`,
                 price: 0,
                 attributes: { paper_size: "A4" },
               }),
-            }
+            },
           ).then(async (res) => {
             if (!res.ok) {
               const text = await res.text();

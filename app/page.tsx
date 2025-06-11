@@ -36,6 +36,7 @@ export default function Home() {
         }
         const res = await response.json();
         console.log("Merchant data:", res);
+<<<<<<< HEAD
         if (res.data) {
           const options: StatProps = {
             totalOrders: res.data.totalOrders,
@@ -51,6 +52,9 @@ export default function Home() {
           setStat(options);
         }
         if (res.data.length == 0) {
+=======
+        if (res.data.shopName == null) {
+>>>>>>> bf6783b4d107ec363bb9aa5f4a3bcb1610580218
           // Use a stable navigation approach
           router.replace("/onboarding/setup");
         }

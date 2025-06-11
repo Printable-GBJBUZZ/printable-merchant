@@ -30,10 +30,10 @@ const Table = () => {
     return order.map((items) => ({
       orderNo: items.id,
       customer: {
-        name: items.name ?? items.userId ?? "Unknown",
-        email: items.email ?? "No Email",
+        name: items.userId ?? "Unknown",
+        email: "No Email",
       },
-      type: items.type ?? "Paper",
+      type: "Paper",
       status: items.status ?? "pending",
       amount: Number(items.totalAmount ?? 0),
       documents: items.documents.map((doc) => ({

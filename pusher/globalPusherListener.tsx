@@ -17,14 +17,14 @@ export default function GlobalPusherListener() {
     const channel = pusherClient.subscribe(`merchant-${user.id}`);
     console.log("Pusher initialized for user:", user.id);
 
-    channel.bind("new-order", (data: any) => {
+    channel?.bind("new-order", (data: any) => {
       toast.success("🥳🥳 You got a new Order!! Hurry up 🏃‍♂️");
       addOrder([data.order]);
     });
 
     return () => {
       console.log("Cleaning up Pusher subscription");
-      channel.unbind_all();
+      channel?.unbind_all();
       pusherClient?.unsubscribe(`merchant-${user.id}`);
     };
   }, [isLoaded, user?.id]);

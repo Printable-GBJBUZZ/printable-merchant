@@ -29,7 +29,7 @@ export default function ServicesPage() {
     setSelectedServices((prev) =>
       prev.includes(service)
         ? prev.filter((s) => s !== service)
-        : [...prev, service],
+        : [...prev, service]
     );
   };
 

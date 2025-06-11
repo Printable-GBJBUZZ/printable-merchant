@@ -1,21 +1,22 @@
-"use client"; // Add this to enforce it's client-only
+"use client"; // Ensures client-side execution
 
-import Pusher from "pusher-js";
+import Pusher, { Channel } from "pusher-js";
 
 Pusher.logToConsole = true;
 
 class PusherClient {
-  private pusher: Pusher;
-  private isConnected: boolean = false;
+  private pusher: Pusher | null = null;
+  private isConnected = false;
 
   constructor() {
-    if (typeof window === "undefined") return; // Skip on server
+    if (typeof window === "undefined") return;
 
-    const PUSHER_KEY = process.env.PUSHER_KEY! || "7e1f499e8a4730060fd6";
-    const PUSHER_CLUSTER = process.env.PUSHER_CLUSTER! || "ap2";
+    const PUSHER_KEY =
+      process.env.NEXT_PUBLIC_PUSHER_KEY || "7e1f499e8a4730060fd6";
+    const PUSHER_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_CLUSTER || "ap2";
 
     if (!PUSHER_KEY || !PUSHER_CLUSTER) {
-      throw new Error("Pusher env vars are missing");
+      throw new Error("Pusher environment variables are missing.");
     }
 
     this.pusher = new Pusher(PUSHER_KEY, {
@@ -38,21 +39,27 @@ class PusherClient {
     });
   }
 
-  public subscribe(channel: string) {
+  public subscribe(channelName: string): Channel | null {
+    if (!this.pusher) return null;
     if (!this.isConnected) {
       this.pusher.connect();
     }
-    return this.pusher.subscribe(channel);
+    return this.pusher.subscribe(channelName);
   }
 
-  public unsubscribe(channel: string) {
-    this.pusher.unsubscribe(channel);
+  public unsubscribe(channelName: string) {
+    if (!this.pusher) return;
+    this.pusher.unsubscribe(channelName);
   }
 
   public disconnect() {
+    if (!this.pusher) return;
     this.pusher.disconnect();
   }
 }
 
-const pusherClient = typeof window !== "undefined" ? new PusherClient() : null;
+// Export only on client side
+const pusherClient: PusherClient | null =
+  typeof window !== "undefined" ? new PusherClient() : null;
+
 export default pusherClient;
