@@ -1,40 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "merchant",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev -p 4000",
-    "build": "next build",
-    "start": "next start -p 4000"
-  },
-  "dependencies": {
-    "@clerk/nextjs": "^6.20.0",
-    "@fortawesome/fontawesome-svg-core": "^6.7.2",
-    "@fortawesome/free-brands-svg-icons": "^6.7.2",
-    "@fortawesome/free-regular-svg-icons": "^6.7.2",
-    "@fortawesome/free-solid-svg-icons": "^6.7.2",
-    "@fortawesome/react-fontawesome": "^0.2.2",
-    "@react-google-maps/api": "^2.20.6",
-    "lucide-react": "^0.507.0",
-    "next": "15.3.1",
-    "pusher-js": "^8.4.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-toastify": "^11.0.5",
-    "@fortawesome/fontawesome-free": "^6.7.2"
-  },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.21",
-    "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.5",
-    "typescript": "^5"
-  }
-=======
     "name": "merchant",
     "version": "0.1.0",
     "private": true,
@@ -71,5 +35,4 @@
         "tailwindcss": "^4.1.5",
         "typescript": "^5"
     }
->>>>>>> bf6783b4d107ec363bb9aa5f4a3bcb1610580218
 }
