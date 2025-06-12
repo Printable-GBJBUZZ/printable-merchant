@@ -11,7 +11,7 @@ interface document {
 }
 interface TableDataProps {
   orderNo: string;
-  customer: { name: string; email: string };
+  customer: { phone: string; email: string };
   type: string;
   status: string;
   amount: number;
@@ -31,8 +31,8 @@ const Table = () => {
     return order.map((items) => ({
       orderNo: items.id,
       customer: {
-        name: items.userId ?? "Unknown",
-        email: "No Email",
+        phone: JSON.parse(items.userPhoneNumber).phone_number,
+        email: items.userEmail,
       },
       type: "Paper",
       status: items.status ?? "pending",
@@ -126,7 +126,7 @@ const Table = () => {
             <th className="py-3 px-4 text-left text-sm font-medium text-gray-700">
               ORDER ID
             </th>
-            <th className="py-3 px-4 text-left text-sm font-medium text-gray-700">
+            <th className="py-3 px-6 text-left text-sm font-medium text-gray-700">
               CUSTOMER
             </th>
             <th className="py-3 px-4 text-left text-sm font-medium text-gray-700">
@@ -149,12 +149,14 @@ const Table = () => {
               <tr key={index}>
                 <td className="py-4 px-4 text-sm text-gray-600">
                   <div className="flex items-center justify-between">
-                    <span>{data.orderNo}</span>
+                    <span className="truncate max-w-[150px]">
+                      {data.orderNo}
+                    </span>
                     <button
                       onClick={() =>
                         router.push(`/orders-overview/${data.orderNo}`)
                       }
-                      className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                      className="p-1 hover:bg-gray-100 rounded-full transition-colors "
                     >
                       <Eye className="w-5 h-5 text-gray-600" />
                     </button>
@@ -164,7 +166,7 @@ const Table = () => {
                   <div className="flex items-center gap-2">
                     <User className="w-5 h-5 text-gray-500" />
                     <div className="flex flex-col">
-                      <span className="font-medium">{data.customer.name}</span>
+                      <span className="font-medium">{data.customer.phone}</span>
                       <span className="text-gray-500">
                         {data.customer.email}
                       </span>

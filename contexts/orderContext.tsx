@@ -22,6 +22,8 @@ interface DocumentDetails {
 export interface MerchantOrder {
   id: string;
   userId: string;
+  userPhoneNumber: string;
+  userEmail: string;
   merchantId: string;
   status: "pending" | "processing" | "completed" | "cancelled" | string;
   totalAmount: number;
