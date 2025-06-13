@@ -36,6 +36,10 @@ export default function Home() {
         }
         const res = await response.json();
         console.log("Merchant data:", res);
+	if (res.data.shopName===null){
+		router.push("/onboarding/setup");
+
+	}
         if (res.data) {
           const options: StatProps = {
             totalOrders: res.data.totalOrders,
