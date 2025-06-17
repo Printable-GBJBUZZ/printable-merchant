@@ -1,7 +1,12 @@
 import React from "react";
+import Main from "@/components/Earnings&Wallet/main";     //earning and wallet
 
-const Layout = () => {
-	return <div className="">Base Layout</div>;
+const Page = () => {
+    return (
+        <div className="h-full w-full">
+            <Main />
+        </div>
+    )
 };
 
-export default Layout;
+export default Page;
