@@ -1,0 +1,169 @@
+import KPICard from "@/components/KPICard/KPICard";
+import Table from "./Table/Table";
+import LineGraphDashboard from "@/components/LineGraphDashboard/LineGraphDashboard";
+import { RefreshCwIcon } from "lucide-react";
+import TopSellingItem from "@/components/TopSellingItem/TopSellingItem";
+
+const kpiCards = [
+	{
+		title: "Total Orders",
+		todayValue: "24",
+		percentage: "12 %",
+		yesterdayValue: "vs. 21 yesterday",
+		icon: (
+			<button className="bg-[#007AFF26] absolute top-4 right-4 w-9 h-9 flex justify-center items-center rounded-full">
+				<svg width="17" height="21" viewBox="0 0 17 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect x="1.5" y="1.5" width="14" height="18" rx="4" stroke="#007AFF" strokeWidth="1.5" />
+					<path d="M5.5 5.5H11.5" stroke="#007AFF" strokeWidth="1.5" strokeLinecap="round" />
+					<path d="M5.5 10.5H11.5" stroke="#007AFF" strokeWidth="1.5" strokeLinecap="round" />
+					<path d="M5.5 15.5H7.5" stroke="#007AFF" strokeWidth="1.5" strokeLinecap="round" />
+				</svg>
+			</button>
+		),
+		isIncreasePercentage: true,
+	},
+	{
+		title: "Today's Revenue",
+		todayValue: "₹1,842",
+		percentage: "8 %",
+		yesterdayValue: "vs. ₹1,705 yesterday",
+		icon: (
+			<button className="bg-[#34C75926] absolute top-4 right-4 w-9 h-9 flex justify-center items-center rounded-full">
+				<svg width="13" height="19" viewBox="0 0 13 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M1 1.25H12M1 5.83333H12M8.79167 17.75L1 10.4167H3.75C9.86142 10.4167 9.86142 1.25 3.75 1.25"
+						stroke="#34C759"
+						strokeWidth="1.5"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+				</svg>
+			</button>
+		),
+		isIncreasePercentage: true,
+	},
+	{
+		title: "Pending Orders",
+		todayValue: "18",
+		percentage: "5 %",
+		yesterdayValue: "vs. 17 yesterday",
+		icon: (
+			<button className="bg-[#FFCC0026] absolute top-4 right-4 w-9 h-9 flex justify-center items-center rounded-full">
+				<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M10.5007 5.00065V10.5007L14.1673 12.334M19.6673 10.5007C19.6673 15.5632 15.5632 19.6673 10.5007 19.6673C5.43804 19.6673 1.33398 15.5632 1.33398 10.5007C1.33398 5.43804 5.43804 1.33398 10.5007 1.33398C15.5632 1.33398 19.6673 5.43804 19.6673 10.5007Z"
+						stroke="#FFCC00"
+						strokeWidth="1.5"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+				</svg>
+			</button>
+		),
+		isIncreasePercentage: false,
+	},
+	{
+		title: "Accepted Orders",
+		todayValue: "12",
+		percentage: "20 %",
+		yesterdayValue: "vs. 10 yesterday",
+		icon: (
+			<button className="bg-[#AF52DE26] absolute top-4 right-4 w-9 h-9 flex justify-center items-center rounded-full">
+				<svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path
+						d="M6.37565 10.5007L9.12565 13.2507L14.6257 7.75065M19.6673 10.5007C19.6673 15.5632 15.5632 19.6673 10.5007 19.6673C5.43804 19.6673 1.33398 15.5632 1.33398 10.5007C1.33398 5.43804 5.43804 1.33398 10.5007 1.33398C15.5632 1.33398 19.6673 5.43804 19.6673 10.5007Z"
+						stroke="#AF52DE"
+						strokeWidth="1.5"
+						strokeLinecap="round"
+						strokeLinejoin="round"
+					/>
+				</svg>
+			</button>
+		),
+		isIncreasePercentage: true,
+	},
+];
+
+const topSellingItems = [
+	{
+		imageSrc: "/3U_Cube_Logo_Template.jpg",
+		title: "3U Cube logo Template",
+		salesCount: "1520 Sales",
+		availability: true,
+		remaining: "135 Stocks Remaining",
+	},
+	{
+		imageSrc: "/printable_visiting_card.png",
+		title: "Printable Visiting Card",
+		salesCount: "151 Sales",
+		availability: true,
+		remaining: "120 Stocks Remaining",
+	},
+	{
+		imageSrc: "/ramu_kaka_ki_chai_logo_template.jpg",
+		title: "Ramu Kaka Ki Chai Logo Template",
+		salesCount: "235 Sales",
+		availability: true,
+		remaining: "300 Stocks Remaining",
+	},
+	{
+		imageSrc: "/realme_T300_3D_object.png",
+		title: "realme T300 3d object",
+		salesCount: "51 Sales",
+		availability: true,
+		remaining: "510 Stocks Remaining",
+	},
+];
+
+export default function Home() {
+	return (
+		<div className="flex flex-col flex-1 gap-4">
+			<div>
+				<p className="text-[28px] font-medium">Dashboard</p>
+			</div>
+			<div>
+				{/* KPI Cards Start */}
+				<div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-3">
+					{kpiCards.map((kpiCard, index) => (
+						<KPICard data={kpiCard} key={index} />
+					))}
+				</div>
+				{/* KPI Cards End */}
+			</div>
+			<div className="flex gap-4">
+				<div className="flex-1">
+					<LineGraphDashboard />
+				</div>
+				<div className="flex-1 bg-white rounded-lg p-4 flex flex-col gap-4">
+					<div className="flex justify-between items-center">
+						<div className="flex items-center gap-2">
+							<span className="font-medium text-xl">Top Selling Items</span>
+							<div className="w-4 h-4">
+								<RefreshCwIcon className="text-[#007AFF] w-full h-full" />
+							</div>
+						</div>
+						<div>
+							<span className="font-medium text-sm text-[#007AFF]">View All</span>
+						</div>
+					</div>
+					<div className="flex flex-col gap-4">
+						{topSellingItems.map((item, index) => (
+							<TopSellingItem {...item} key={index} />
+						))}
+					</div>
+				</div>
+			</div>
+			<div className="bg-white p-4 rounded-xl flex flex-col flex-1 gap-4">
+				{/* Recent Orders Start */}
+				<div className="flex items-center justify-between">
+					<span>Recent Orders</span>
+					<span className="text-[#007AFF] text-sm">View All</span>
+				</div>
+				<div className="overflow-auto flex-1">
+					<Table />
+				</div>
+				{/* Recent Orders End */}
+			</div>
+		</div>
+	);
+}
