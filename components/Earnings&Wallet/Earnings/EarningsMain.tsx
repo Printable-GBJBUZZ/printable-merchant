@@ -90,7 +90,7 @@ export default function EarningsMain() {
 
   return (
     <>
-      <div className="w-full h-[67%] flex flex-row">
+      <div className="w-full flex flex-row">
         <div className="w-[420px] h-full flex flex-col gap-[13px]">
           {/* total earning */}
           <TotalEarningsBlock />
@@ -100,16 +100,16 @@ export default function EarningsMain() {
         </div>
 
         {/* chart */}
-        <div className="w-full h-full rounded-[10px] bg-[#FFFFFF] ml-[15px]"></div>
+        <div className="w-full h-[664px] rounded-[10px] bg-[#FFFFFF] ml-[15px]"></div>
       </div>
 
       {/* Transaction History */}
-      <div className="w-full h-[10%] text-[28px] pt-[30px]">
+      <div className="w-full h-[6%] text-[28px] pt-[30px]">
         Transaction History
       </div>
 
       {/* Recent Transactions */}
-      <div className="w-full rounded-[12px] mt-[12px] bg-[#FFFFFF] flex flex-col pb-[60px]">
+      <div className="w-full rounded-[12px] mt-[8px] bg-[#FFFFFF] flex flex-col pb-[60px]">
         {/* Top Navigation */}
         <RecentTransactionsHeader />
 
