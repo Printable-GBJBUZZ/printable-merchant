@@ -7,7 +7,7 @@ export default function NumberofOrdersBlock() {
       <div className="w-full h-full rounded-[10px] bg-[#FFFFFF] flex flex-col justify-center">
         <div className="text-[#555555] text-[20px] flex flex-row items-center justify-between ml-[41px] mr-[41px]">
           <span>Number of Orders</span>
-          <div className="w-[34px] h-[34px] bg-[#34C75926] rounded-[17px] flex justify-center items-center">
+          <div className="w-[34px] h-[34px] bg-[#FFCC0026] rounded-[17px] flex justify-center items-center">
             <Clock />
           </div>
         </div>

@@ -1,4 +1,4 @@
-import Arrow from "@/icons/EarningsWallet/Arrow";
+import RedArrow from "@/icons/EarningsWallet/RedArrow";
 import Note from "@/icons/EarningsWallet/Note";
 
 export default function CancelledOrdersBlock() {
@@ -7,7 +7,7 @@ export default function CancelledOrdersBlock() {
       <div className="w-full h-full rounded-[10px] bg-[#FFFFFF] flex flex-col justify-center">
         <div className="text-[#555555] text-[20px] flex flex-row items-center justify-between ml-[41px] mr-[41px]">
           <span>Cancelled Orders</span>
-          <div className="w-[34px] h-[34px] bg-[#FF3B3026] rounded-[17px] flex justify-center items-center">
+          <div className="w-[34px] h-[34px] bg-[#007AFF26] rounded-[17px] flex justify-center items-center">
             <Note />
           </div>
         </div>
@@ -16,7 +16,7 @@ export default function CancelledOrdersBlock() {
             {" "}
             12
             <div className="ml-[15px] flex items-center gap-1">
-              <Arrow />
+              <RedArrow />
               <span className="text-base text-[#FF3B30]">5%</span>
             </div>
           </div>

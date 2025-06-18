@@ -16,6 +16,24 @@ export default function Note(){
           stroke="#007AFF"
           strokeWidth="1.5"
         />
+        <path
+          d="M5 5.5H11"
+          stroke="#007AFF"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        <path
+          d="M5 10.5H11"
+          stroke="#007AFF"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+        <path
+          d="M5 15.5H7"
+          stroke="#007AFF"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
       </svg>
     );
 }

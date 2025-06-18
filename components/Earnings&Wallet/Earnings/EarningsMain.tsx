@@ -2,6 +2,7 @@ import Transaction from "./Transaction";
 import RecentTransactionsHeader from "./RecentTransactionsHeader";
 import TotalEarningsBlock from "./Blocks/TotalEarningsBlock";
 import OrdersSection from "./OrdersSection";
+import Chart from "./Chart";
 
 type TransactionData = {
   date: string;
@@ -100,7 +101,9 @@ export default function EarningsMain() {
         </div>
 
         {/* chart */}
-        <div className="w-full h-[664px] rounded-[10px] bg-[#FFFFFF] ml-[15px]"></div>
+        <div className="w-full h-[664px] rounded-[10px] bg-[#FFFFFF] ml-[15px]">
+          <Chart />
+        </div>
       </div>
 
       {/* Transaction History */}
