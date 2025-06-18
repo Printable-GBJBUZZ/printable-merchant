@@ -6,6 +6,7 @@
 -   **Tailwind CSS**: 4.1.10
 -   **Axios**: 1.10.0
 -   **Lucide React**: 0.516.0
+-   **Recharts**: 2.15.3
 
 ## Structure
 
