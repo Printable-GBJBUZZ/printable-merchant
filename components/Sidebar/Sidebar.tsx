@@ -17,7 +17,11 @@ const navbarlinks = [
   { title: "Marketplace", icon: <Marketplace />, href: "" },
   { title: "Document Vault", icon: <DocumentVaultIcon />, href: "" },
   { title: "Services & Pricing", icon: <ServicesPricingIcon />, href: "" },
-  { title: "Earnings & Wallet", icon: <EarningsWalletIcon />, href: "", },
+  {
+    title: "Earnings & Wallet",
+    icon: <EarningsWalletIcon />,
+    href: "earnings-wallet",
+  },
   { title: "Chat with customers", icon: <ChatWithCustomersIcon />, href: "" },
   { title: "Equipments", icon: <Equipments />, href: "" },
 ];
