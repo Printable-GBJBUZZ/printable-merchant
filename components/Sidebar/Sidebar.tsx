@@ -19,7 +19,7 @@ const navbarlinks = [
   { title: "Services & Pricing", icon: <ServicesPricingIcon />, href: "" },
   {
     title: "Earnings & Wallet",
-    icon: <EarningsWalletIcon />,
+    icon: <EarningsWalletIcon width={22} height={23} />,
     href: "earnings-wallet",
   },
   { title: "Chat with customers", icon: <ChatWithCustomersIcon />, href: "" },
