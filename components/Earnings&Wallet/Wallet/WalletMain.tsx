@@ -13,45 +13,55 @@ export default function WalletMain() {
       console.log("Saving payment method:", data);
     };
     
-   const [isRazorpayConnected, setIsRazorpayConnected] = useState(false);
-   const [isRazorpayHovered, setIsRazorpayHovered] = useState(false);
+    const [isRazorpayConnected, setIsRazorpayConnected] = useState(false);
+    const [isRazorpayHovered, setIsRazorpayHovered] = useState(false);
   
-  return (
-    <div className="p-4 md:p-5">
-      <div className="flex flex-col lg:flex-row gap-4">
-        {/* Wallet Balance Card */}
-        <WalletBalanceCard />
-
-        {/* Payment Methods Section */}
-        <div className="w-full lg:w-2/3 rounded-2xl p-4 bg-white">
-          <div className="space-y-2 mb-4">
-            <p className="text-lg md:text-xl font-medium">Payment Method</p>
-            <p className="text-sm text-gray-600">
-              Manage Your Payout methods and withdrawal preferences
-            </p>
+    return (
+      <>
+        <div className="w-full flex flex-col lg:flex-row gap-4">
+          {/* Wallet Balance Card */}
+          <div className="w-[476px]"> {/* Removed h-full to match payment section height */}
+            <WalletBalanceCard />
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            {/* Linked Payout Account */}
-            <LinkedPayoutAccount setIsModalOpen={setIsModalOpen} />
+          {/* Payment Methods Section */}
+          <div className="flex-1 rounded-[10px] bg-white">
+            <div className="p-6">
+              <div className="space-y-2 mb-4">
+                <p className="text-lg md:text-xl font-medium">Payment Method</p>
+                <p className="text-sm text-gray-600">
+                  Manage Your Payout methods and withdrawal preferences
+                </p>
+              </div>
 
-            {/* Third-party Accounts */}
-            <ThirdPartyAccount />
+              <div className="grid md:grid-cols-2 gap-4">
+                {/* Linked Payout Account */}
+                <LinkedPayoutAccount setIsModalOpen={setIsModalOpen} />
+
+                {/* Third-party Accounts */}
+                <ThirdPartyAccount />
+              </div>
+
+              {/* Auto Withdrawal */}
+              <AutoWithdrawal />
+            </div>
           </div>
-
-          {/* Auto Withdrawal */}
-          <AutoWithdrawal />
         </div>
-      </div>
 
-      {/* Payout History */}
-      <PayoutHistory />
+        {/* Payout History */}
+        <div className="w-full h-[6%] text-[28px] pt-[30px]">
+          Payout History
+        </div>
 
-      <PaymentMethodModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleSave}
-      />
-    </div>
-  );
+        <div className="w-full rounded-[12px] mt-[8px] bg-white">
+          <PayoutHistory />
+        </div>
+
+        <PaymentMethodModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSave}
+        />
+      </>
+    );
 }

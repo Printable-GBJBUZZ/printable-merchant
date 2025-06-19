@@ -6,8 +6,10 @@ type TopNavigationProps = {
 export default function TopNavigation({ activeTab, setActiveTab }: TopNavigationProps) {
     return (
         <div className="w-full h-[6.4%] flex justify-between">
-            <div className="w-[165px] flex justify-center items-center">
-                <h1 className="text-[28px]">My Earnings</h1>
+            <div className="w-[165px] ">
+                <h1 className="text-[28px]">
+                    {activeTab === 'earnings' ? 'My Earnings' : 'My Wallet'}
+                </h1>
             </div>
 
             <div className="w-[355px] h-[50px] rounded-[50px] flex flex-row border-[1px] border-[#C9C9C9] p-[5px]">

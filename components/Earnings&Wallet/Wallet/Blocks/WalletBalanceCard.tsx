@@ -4,7 +4,7 @@ import DownloadButton from "@/icons/EarningsWallet/DownloadButton";
 
 export default function WalletBalanceCard() {
   return (
-    <div className="w-full lg:w-1/3 min-h-[500px] rounded-2xl bg-gradient-to-br from-[#2563EB] via-[#34d399] to-[#34C759] p-6 md:p-10 relative overflow-hidden">
+    <div className="w-full h-full rounded-2xl bg-gradient-to-br from-[#2563EB] via-[#34d399] to-[#34C759] p-6 relative overflow-hidden">
       {/* Glass effect overlay - adjusted opacity for better blend */}
       <div className="absolute inset-0 bg-white/5 backdrop-blur-sm"></div>
 
