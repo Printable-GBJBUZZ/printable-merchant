@@ -5,7 +5,7 @@ type IconProps = React.SVGProps<SVGSVGElement>;
 const EarningsWalletIcon: React.FC<IconProps> = (props) => {
   return (
     <svg
-      {...props} // Spread all passed props here
+      {...props} 
       viewBox="0 0 22 23"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

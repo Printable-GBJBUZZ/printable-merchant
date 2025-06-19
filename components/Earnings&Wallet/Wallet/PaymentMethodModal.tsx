@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CloseCross from "@/icons/EarningsWallet/CloseCross";
 
 interface PaymentMethodModalProps {
   isOpen: boolean;
@@ -27,6 +28,8 @@ export default function PaymentMethodModal({
     { id: "sbi", name: "State Bank of India (SBI)" },
     { id: "hdfc", name: "HDFC Bank" },
     { id: "icici", name: "ICICI Bank" },
+    { id: "axis", name: "Axis Bank" },
+    { id: "baroda", name: "Baroda Bank" },
   ];
 
   return (
@@ -39,7 +42,7 @@ export default function PaymentMethodModal({
 
       {/* Modal */}
       <div className="absolute top-1/2 left-1/2 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2">
-        <div className="bg-white/20 backdrop-blur-xl rounded-2xl shadow-2xl p-6 m-4 border border-white/30">
+        <div className="bg-[#FFFFFF59] backdrop-blur-[96px] rounded-2xl shadow-2xl p-6 m-4 border border-[#D0D0D0]">
           {/* Header */}
           <div className="flex justify-between items-start mb-4">
             <div>
@@ -50,18 +53,18 @@ export default function PaymentMethodModal({
                 Add a bank account or UPI ID to receive your payouts.
               </p>
             </div>
-            <button
+            <div
               onClick={onClose}
-              className="text-black p-2 text-4xl leading-none rounded-full hover:bg-gradient-radial from-[#34C759] via-[#34C759]/20 to-gray-200 transition-all duration-300"
+              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-[#E6E6E6] transition-colors cursor-pointer"
             >
-              ✕
-            </button>
+              <CloseCross />
+            </div>
           </div>
 
           {/* Payment Type Selector */}
-          <div className="flex rounded-lg bg-white/10 p-1 mt-4 mb-6">
+          <div className="flex p-1 mt-4 mb-6 rounded-[50px] border-[1px] border-[#555555]">
             <button
-              className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all ${
+              className={`flex-1 py-2 px-4 rounded-[50px] text-sm font-medium transition-all ${
                 paymentType === "bank"
                   ? "bg-[#06044B] text-white"
                   : "text-black"
@@ -71,7 +74,7 @@ export default function PaymentMethodModal({
               Bank Account
             </button>
             <button
-              className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all ${
+              className={`flex-1 py-2 px-4 rounded-[50px]   text-sm font-medium transition-all ${
                 paymentType === "upi" ? "bg-[#06044B] text-white" : "text-black"
               }`}
               onClick={() => setPaymentType("upi")}
@@ -85,13 +88,13 @@ export default function PaymentMethodModal({
             // Bank Account Form
             <div className="space-y-4 text-black">
               <div>
-                <label className="block text-sm font-medium mb-1 text-black">
+                <label className="block text-base font-medium mb-1 text-black">
                   Account Holder Name
                 </label>
                 <input
                   type="text"
                   placeholder="Enter account holder name"
-                  className="w-full p-3 rounded-lg border border-gray-300 bg-white/30 placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
+                  className="w-full p-3 rounded-[10px] bg-[#FFFFFF] placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
                   value={formData.accountHolderName}
                   onChange={(e) =>
                     setFormData({
@@ -103,17 +106,19 @@ export default function PaymentMethodModal({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-black">
+                <label className="block text-base font-medium mb-1 text-black">
                   Bank Name
                 </label>
                 <select
-                  className="w-full p-3 rounded-lg border border-gray-300 bg-white/30 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
+                  className="w-full p-3 rounded-[10px] bg-[#FFFFFF] text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
                   value={formData.bankName}
                   onChange={(e) =>
                     setFormData({ ...formData, bankName: e.target.value })
                   }
                 >
-                  <option value="">Select your Bank</option>
+                  <option value="" className="text-[#555555]">
+                    Select your Bank
+                  </option>
                   {banks.map((bank) => (
                     <option key={bank.id} value={bank.id}>
                       {bank.name}
@@ -123,13 +128,13 @@ export default function PaymentMethodModal({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-black">
+                <label className="block text-base font-medium mb-1 text-black">
                   Account Number
                 </label>
                 <input
                   type="text"
                   placeholder="Enter account number"
-                  className="w-full p-3 rounded-lg border border-gray-300 bg-white/30 placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
+                  className="w-full p-3 rounded-[10px] bg-[#FFFFFF] placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
                   value={formData.accountNumber}
                   onChange={(e) =>
                     setFormData({ ...formData, accountNumber: e.target.value })
@@ -138,13 +143,13 @@ export default function PaymentMethodModal({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-black">
+                <label className="block text-base font-medium mb-1 text-black">
                   Confirm Account Number
                 </label>
                 <input
                   type="text"
                   placeholder="Re-enter account number"
-                  className="w-full p-3 rounded-lg border border-gray-300 bg-white/30 placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
+                  className="w-full p-3 rounded-[10px] bg-[#FFFFFF] placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
                   value={formData.confirmAccountNumber}
                   onChange={(e) =>
                     setFormData({
@@ -156,13 +161,13 @@ export default function PaymentMethodModal({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-black">
+                <label className="block text-base font-medium mb-1 text-black">
                   IFSC Code
                 </label>
                 <input
                   type="text"
                   placeholder="Enter IFSC Code"
-                  className="w-full p-3 rounded-lg border border-gray-300 bg-white/30 placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
+                  className="w-full p-3 rounded-[10px] bg-[#FFFFFF] placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
                   value={formData.ifscCode}
                   onChange={(e) =>
                     setFormData({ ...formData, ifscCode: e.target.value })
@@ -173,7 +178,7 @@ export default function PaymentMethodModal({
           ) : (
             // UPI Form
             <div className="space-y-4 text-black">
-              <div className="bg-white/30 rounded-lg p-4 flex items-start gap-3">
+              <div className="bg-[#FFFFFF] rounded-[10px] p-4 flex items-start gap-3">
                 <span className="inline-block w-6 h-6 rounded-full border border-blue-600 text-blue-600 text-center leading-6">
                   i
                 </span>
@@ -184,13 +189,13 @@ export default function PaymentMethodModal({
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1 text-black">
+                <label className="block text-base font-medium mb-1 text-black">
                   UPI ID
                 </label>
                 <input
                   type="text"
                   placeholder="yourname@okhdfc"
-                  className="w-full p-3 rounded-lg border border-gray-300 bg-white/30 placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
+                  className="w-full p-3 rounded-[10px] bg-[#FFFFFF] placeholder-gray-600 text-black focus:outline-none focus:ring-2 focus:ring-[#06044B]/20 focus:border-[#06044B]"
                   value={formData.upiId}
                   onChange={(e) =>
                     setFormData({ ...formData, upiId: e.target.value })
@@ -209,7 +214,7 @@ export default function PaymentMethodModal({
               onSave(formData);
               onClose();
             }}
-            className="w-full mt-6 py-3 bg-[#06044B] text-white rounded-lg hover:bg-[#06044B]/90 transition-colors"
+            className="w-full mt-6 py-3 bg-[#06044B] text-white rounded-[10px] hover:bg-[#06044B]/90 transition-colors"
           >
             Save & Link
           </button>
