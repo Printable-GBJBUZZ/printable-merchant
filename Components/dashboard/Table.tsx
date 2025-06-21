@@ -31,7 +31,7 @@ const Table = () => {
     return order.map((items) => ({
       orderNo: items.id,
       customer: {
-        phone: JSON.parse(items.userPhoneNumber).phone_number,
+        phone: items.userPhoneNumber==undefined ? "No phone" : JSON.parse(items.userPhoneNumber).phone_number,
         email: items.userEmail,
       },
       type: "Paper",
