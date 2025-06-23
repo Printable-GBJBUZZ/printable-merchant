@@ -8,7 +8,10 @@ import { useRouter } from "next/navigation";
 import { FaArrowLeft, FaDownload } from "react-icons/fa6";
 import { Status } from "@/Components/Status/page";
 
-const order = [
+
+
+
+/* const order = [
   //Currently im using this mock data but in real data came from useOrderhook
   //functionality already added all you need to use only useOrder hook
   {
@@ -30,7 +33,8 @@ const order = [
     documents: [
       {
         fileName: "resume.pdf",
-        fileUrl: "https://example.com/documents/resume.pdf",
+        fileUrl:
+          "https://drive.google.com/file/d/1HlACZt8Wu-LtUGnzw8XgBn5r4kJ10wDv/view?usp=drive_link",
         copies: 2,
         colorType: "black_and_white",
         paperType: "A4",
@@ -40,7 +44,8 @@ const order = [
 
       {
         fileName: "project_report.xls",
-        fileUrl: "https://example.com/documents/project_report.pptx",
+        fileUrl:
+          "https://drive.google.com/file/d/1HlACZt8Wu-LtUGnzw8XgBn5r4kJ10wDv/view?usp=drive_link",
         copies: 1,
         colorType: "color",
         paperType: "Letter",
@@ -49,12 +54,13 @@ const order = [
       },
     ],
   },
-];
+]; */
 
 const OrdersOverview: React.FC = () => {
   // Assuming useOrder hook gives you the orders
 
-  // const { order } = useOrder();
+  const { order } = useOrder();
+  console.log("cheking  order" , order);
 
   const router = useRouter();
 
@@ -104,20 +110,34 @@ const OrdersOverview: React.FC = () => {
     }
   };
 
-  // Create a separate handler for download
-  const handleDownload = (
-    fileUrl: string,
-    fileName: string,
-    e: React.MouseEvent
-  ) => {
-    e.stopPropagation(); // Prevent triggering the other click event for document selection
+const handleDownload = async (fileUrl: string, fileName: string) => {
+  try {
+    const response = await fetch(fileUrl);
+    if (!response.ok) throw new Error('Failed to fetch file');
 
-    // Create an anchor element to trigger the download
-    const link = document.createElement("a");
-    link.href = fileUrl; // Set the URL for the file to download
-    link.download = fileName; // Set the file name for the download
-    link.click(); // Simulate a click event to trigger the download
-  };
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Download error:', error);
+  }
+};
+
+
+
+
+
+
+
+
 
   return (
     <div className="bg-[#E6E7F0] p-6 min-h-screen">
@@ -184,39 +204,35 @@ const OrdersOverview: React.FC = () => {
                         ? "bg-indigo-100"
                         : "bg-[#e6eaf3]"
                     }`}
-                    onClick={() => handleDocumentClick(doc)}
+                    onClick={() => handleDocumentClick(doc)} // Click to select the document
                   >
-                    <a
-                      href={`/order-details/${doc.fileName}`}
-                      className="flex items-center space-x-4 w-full"
-                      onClick={(e) => e.preventDefault()} // Prevent navigation for demo
-                    >
-                      {/* File icon */}
-                      <img
-                        alt={doc.fileName}
-                        className="w-16 h-16 rounded"
-                        src={getFileIcon(doc.fileName)} // Use the function to determine which icon to show
-                        width="64"
-                        height="64"
-                      />
-                      <div className="text-xs text-gray-900 leading-tight">
-                        <div className="font-semibold text-[13px]">
-                          {doc.fileName}
-                        </div>
-                        <div className="text-[11px] text-gray-500">
-                          Copies: {doc.copies}
-                        </div>
+                    {/* File icon */}
+                    <img
+                      alt={doc.fileName}
+                      className="w-16 h-16 rounded"
+                      src={getFileIcon(doc.fileName)} // Use the function to determine which icon to show
+                      width="64"
+                      height="64"
+                    />
+                    <div className="text-xs text-gray-900 leading-tight">
+                      <div className="font-semibold text-[13px]">
+                        {doc.fileName}
                       </div>
+                      <div className="text-[11px] text-gray-500">
+                        Copies: {doc.copies}
+                      </div>
+                    </div>
 
-                      <div className="ml-auto flex justify-end items-center">
-                        <FaDownload
-                          size={20}
-                          onClick={(e) =>
-                            handleDownload(doc.fileUrl, doc.fileName, e)
-                          }
-                        />
-                      </div>
-                    </a>
+                    {/* Download icon */}
+                    <div className="ml-auto flex justify-end items-center">
+                      <FaDownload
+                        size={20}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent the click from propagating to the parent div
+                          handleDownload(doc.fileUrl, doc.fileName); // Trigger the download
+                        }}
+                      />
+                    </div>
                   </div>
                 ))}
 
