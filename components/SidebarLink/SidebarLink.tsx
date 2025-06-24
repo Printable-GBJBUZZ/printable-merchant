@@ -1,20 +1,26 @@
+"use client";
+
 import React from "react";
-import styles from "./styles.module.css";
+import styles from "./SidebarLink.module.css";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type Link = {
-    icon: any;
-    label: string;
-    href?: string;
-    badge?: number;
-    active?: boolean;
+	icon: any;
+	title: string;
+	href: string;
 };
 
-export default function SidebarLink({ icon, label, href, badge, active }: Link) {
-    return (
-        <a href={href} className={`${styles.sidebarLink} ${active ? "bg-[#CDCDDB] font-medium" : ""}`}>
-            <div>{icon}</div>
-            <span className="flex-1">{label}</span>
-            {badge != null && <span className={styles.badge}>{badge}</span>}
-        </a>
-    );
+export default function SidebarLink({ icon, title, href }: Link) {
+	const pathName = usePathname();
+	const isActive = pathName === href;
+
+	return (
+		<Link
+			href={href}
+			className={`${styles.sidebarLink} ${isActive ? "bg-[#CDCDDB] font-medium" : "hover:bg-gray-200"}`}>
+			<div>{icon}</div>
+			<span className="flex-1">{title}</span>
+		</Link>
+	);
 }

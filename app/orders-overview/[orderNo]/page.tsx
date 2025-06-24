@@ -6,7 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useOrder } from "@/contexts/orderContext";
 import { FaArrowLeft, FaDownload } from "react-icons/fa6";
 import { toast, ToastContainer } from "react-toastify";
-import StatusDropdown from "@/Components/dashboard/statusDropDown";
+import StatusDropdown from "@/Components/Dashboard/statusDropDown";
 
 interface DocumentDetails {
   fileName: string;
