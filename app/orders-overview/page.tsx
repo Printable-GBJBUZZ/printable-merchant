@@ -6,7 +6,7 @@ import { useOrder } from "@/contexts/orderContext";
 
 import { useRouter } from "next/navigation";
 import { FaArrowLeft, FaDownload } from "react-icons/fa6";
-import { Status } from "@/Components/Status/page";
+import { Status } from "@/components/Status/page";
 
 const order = [
   //Currently im using this mock data but in real data came from useOrderhook
@@ -108,7 +108,7 @@ const OrdersOverview: React.FC = () => {
   const handleDownload = (
     fileUrl: string,
     fileName: string,
-    e: React.MouseEvent
+    e: React.MouseEvent,
   ) => {
     e.stopPropagation(); // Prevent triggering the other click event for document selection
 

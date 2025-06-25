@@ -6,7 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useOrder } from "@/contexts/orderContext";
 import { FaArrowLeft, FaDownload } from "react-icons/fa6";
 import { toast, ToastContainer } from "react-toastify";
-import StatusDropdown from "@/Components/Dashboard/statusDropDown";
+import StatusDropdown from "@/components/Dashboard/StatusDropDown";
 
 interface DocumentDetails {
   fileName: string;
@@ -67,7 +67,7 @@ const OrdersOverview: React.FC = () => {
 
   const [orderData, setOrderData] = useState<MerchantOrder | null>(null);
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(
-    null
+    null,
   );
   const [error, setError] = useState<string | null>(null);
   const [loadingStates, setLoadingStates] = useState<{
@@ -134,7 +134,7 @@ const OrdersOverview: React.FC = () => {
   useEffect(() => {
     if (orderNo && order) {
       const foundOrder = order.find(
-        (item: MerchantOrder) => item.id === orderNo
+        (item: MerchantOrder) => item.id === orderNo,
       );
       if (foundOrder) {
         setOrderData(foundOrder);
@@ -161,7 +161,7 @@ const OrdersOverview: React.FC = () => {
   const handleDownload = (
     fileUrl: string,
     fileName: string,
-    e: React.MouseEvent
+    e: React.MouseEvent,
   ) => {
     e.stopPropagation();
     const link = document.createElement("a");
@@ -186,7 +186,7 @@ const OrdersOverview: React.FC = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ status: status.toLowerCase() }),
-        }
+        },
       );
 
       if (res.status === 200) {
