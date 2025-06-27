@@ -1,4 +1,4 @@
-import MainLogo from "@/Components/main-logo";
+import MainLogo from "@/components/main-logo";
 import { SignIn } from "@clerk/nextjs";
 import Image from "next/image";
 

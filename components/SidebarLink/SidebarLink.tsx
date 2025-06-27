@@ -2,7 +2,6 @@
 
 import React from "react";
 import styles from "./SidebarLink.module.css";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 type Link = {
@@ -16,11 +15,11 @@ export default function SidebarLink({ icon, title, href }: Link) {
 	const isActive = pathName === href;
 
 	return (
-		<Link
+		<a
 			href={href}
 			className={`${styles.sidebarLink} ${isActive ? "bg-[#CDCDDB] font-medium" : "hover:bg-gray-200"}`}>
-			<div>{icon}</div>
-			<span className="flex-1">{title}</span>
-		</Link>
+			<div className="flex-shrink-0">{icon}</div>
+			<span className="flex-1 truncate">{title}</span>
+		</a>
 	);
 }

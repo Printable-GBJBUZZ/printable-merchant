@@ -12,14 +12,26 @@ import CustomSidebarCloseIcon from "@/icons/CustomSidebarClose/CustomSidebarClos
 import SidebarLink from "../SidebarLink/SidebarLink";
 
 const navbarlinks = [
-	{ title: "Dashboard", icon: <DashboardIcon />, href: "/" },
-	{ title: "Orders", icon: <OrderIcon />, href: "/orders" },
-	{ title: "Marketplace", icon: <Marketplace />, href: "" },
-	{ title: "Document Vault", icon: <DocumentVaultIcon />, href: "" },
-	{ title: "Services & Pricing", icon: <ServicesPricingIcon />, href: "/services-pricing" },
-	{ title: "Earnings & Wallet", icon: <EarningsWalletIcon />, href: "/earnings-wallet" },
-	{ title: "Chat with customers", icon: <ChatWithCustomersIcon />, href: "/chat-with-customers" },
-	{ title: "Equipments", icon: <Equipments />, href: "" },
+  { title: "Dashboard", icon: <DashboardIcon />, href: "/" },
+  { title: "Orders", icon: <OrderIcon />, href: "/orders" },
+  { title: "Marketplace", icon: <Marketplace />, href: "" },
+  { title: "Document Vault", icon: <DocumentVaultIcon />, href: "" },
+  {
+    title: "Services & Pricing",
+    icon: <ServicesPricingIcon />,
+    href: "/services-pricing",
+  },
+  {
+    title: "Earnings & Wallet",
+    icon: <EarningsWalletIcon width={22} height={23} />,
+    href: "/earnings-wallet",
+  },
+  {
+    title: "Chat with customers",
+    icon: <ChatWithCustomersIcon />,
+    href: "/chat-with-customers",
+  },
+  { title: "Equipments", icon: <Equipments />, href: "" },
 ];
 
 export default function Sidebar() {

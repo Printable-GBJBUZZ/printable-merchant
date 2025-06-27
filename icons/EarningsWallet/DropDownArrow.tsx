@@ -1,0 +1,19 @@
+export default function DropDownArrow(){
+    return (
+      <svg
+        width="15"
+        height="9"
+        viewBox="0 0 15 9"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M1.5 1.5L7.5 7.5L13.5 1.5"
+          stroke="#555555"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+}
