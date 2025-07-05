@@ -15,7 +15,7 @@ const navbarlinks = [
   { title: "Dashboard", icon: <DashboardIcon />, href: "/" },
   { title: "Orders", icon: <OrderIcon />, href: "/orders" },
   { title: "Marketplace", icon: <Marketplace />, href: "" },
-  { title: "Document Vault", icon: <DocumentVaultIcon />, href: "" },
+  { title: "Document Vault", icon: <DocumentVaultIcon />, href: "document-vault" },
   {
     title: "Services & Pricing",
     icon: <ServicesPricingIcon />,
