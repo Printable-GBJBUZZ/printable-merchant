@@ -14,7 +14,15 @@ import SidebarLink from "../SidebarLink/SidebarLink";
 const navbarlinks = [
   { title: "Dashboard", icon: <DashboardIcon />, href: "/" },
   { title: "Orders", icon: <OrderIcon />, href: "/orders" },
-  { title: "Marketplace", icon: <Marketplace />, href: "" },
+  {
+    title: "Marketplace",
+    icon: <Marketplace />,
+    children: [
+      { title: "All Items", href: "/marketplace/all-items" },
+      { title: "Manage Category", href: "/marketplace/categories" },
+      { title: "Manage Items", href: "/marketplace/items" },
+    ],
+  },
   { title: "Document Vault", icon: <DocumentVaultIcon />, href: "document-vault" },
   {
     title: "Services & Pricing",
