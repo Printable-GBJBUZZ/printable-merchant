@@ -161,7 +161,7 @@ const MarketPlace = () => {
 				</div>
 				<div className="w-full mt-4 flex-1 grid grid-cols-5 gap-4">
 					{allProducts.map((product, index) => (
-						<ProductItemCard {...product} />
+						<ProductItemCard {...product} key={index} />
 					))}
 				</div>
 			</div>

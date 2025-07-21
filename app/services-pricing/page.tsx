@@ -192,6 +192,7 @@ const ServiceAndPricingPage = () => {
 								</div>
 								<div>
 									<button
+										key="addNewServiceButton"
 										className="flex items-center justify-center bg-[#06044B] rounded-full px-5 py-2.5"
 										onClick={() => setIsAddServiceModalOpen(true)}>
 										<PlusIcon className="text-white" />
@@ -200,7 +201,7 @@ const ServiceAndPricingPage = () => {
 								</div>
 							</div>
 
-							<div className="flex justify-between">
+							<div className="flex justify-between" key={"div-1"}>
 								<div className="flex-1">
 									<div className="relative border border-[#C9C9C9] rounded-md w-2/3">
 										<span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
@@ -392,6 +393,7 @@ const ServiceAndPricingPage = () => {
 								<div className="border flex border-[#C9C9C9] rounded-[10px] gap-2.5 p-1">
 									{additionalServicesTabs.map((label, index) => (
 										<button
+											key={index}
 											className={`rounded-md px-5 py-2.5 ${
 												additionalServiceTab === label ? "bg-[#06044B] text-white" : ""
 											}`}
@@ -405,7 +407,7 @@ const ServiceAndPricingPage = () => {
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
 								{additionalServicesCards.map((service) => {
 									return (
-										<div className="bg-white shadow px-8 py-4 rounded-md">
+										<div key={service.title} className="bg-white shadow px-8 py-4 rounded-md">
 											<div className="flex items-center gap-4">
 												<div>
 													<div className="rounded-full flex justify-center items-center shadow shadow-[#06044B40]">
@@ -427,6 +429,7 @@ const ServiceAndPricingPage = () => {
 													</div>
 													<label className="inline-flex items-center cursor-pointer">
 														<input
+															readOnly
 															type="checkbox"
 															className="sr-only peer"
 															checked={service.isActive ? true : false}
