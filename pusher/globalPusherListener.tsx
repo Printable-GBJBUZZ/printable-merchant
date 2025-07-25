@@ -14,14 +14,21 @@ export default function GlobalPusherListener() {
   useEffect(() => {
     if (!isLoaded || !user?.id || !pusherClient) return;
 
-    const channel = pusherClient.subscribe(`merchant-${user.id}`);
-    console.log("Pusher initialized for user:", user.id);
-
-    channel?.bind("new-order", (data: any) => {
-      toast.success("🥳🥳 You got a new Order!! Hurry up 🏃‍♂️");
+    // 🛍️ Subscribe for orders
+    const orderChannel = pusherClient.subscribe(`merchant-${user.id}`);
+    orderChannel?.bind("new-order", (data: any) => {
+      toast.success("🥳 New Order!");
       addOrder([data.order]);
     });
 
+    // 💬 Subscribe for chat
+    const chatChannel = pusherClient.subscribe(`chat-userid-${user.id}`);
+    chatChannel?.bind("chat", (data: any) => {
+      toast.success("received new message");
+      console.log("📨 Chat message data:", data);
+    });
+
+    // 🔄 Cleanup
     return () => {
       console.log("Cleaning up Pusher subscription");
       channel?.unbind_all();

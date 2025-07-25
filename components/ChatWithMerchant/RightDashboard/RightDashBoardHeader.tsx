@@ -1,25 +1,28 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import RightHeaderDropDownElement from "./RightHeaderDropDownElement";
 import Pin from "@/icons/ChatWithCustomers/Pin";
 import ThreeDots from "@/icons/ChatWithCustomers/ThreeDots";
+import { UserIcon } from "@heroicons/react/24/solid";
 
-type MessageType = {
-  sender: string;
-  time: string;
-  text: string;
+type ConversationHeaderProps = {
+  conversation: {
+    id: string;
+    name: string;
+    lastMessage?: {
+      text: string;
+      time: string;
+    };
+  };
 };
 
-type RightHeaderProps = {
-  data: MessageType[];
-};
-
-function RightDashBoardHeader({ data }: RightHeaderProps) {
-  const [isOpen, setIsOpen] = React.useState(false);
+export default function RightDashBoardHeader({
+  conversation,
+}: ConversationHeaderProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  function handleClick() {
-    setIsOpen((prev) => !prev);
-  }
+  // Toggle dropdown
+  const handleClick = () => setIsOpen((prev) => !prev);
 
   // Close on outside click
   useEffect(() => {
@@ -41,34 +44,29 @@ function RightDashBoardHeader({ data }: RightHeaderProps) {
     };
   }, [isOpen]);
 
-  if (!data || data.length === 0) {
-    return (
-      <div className="w-full h-[14%] bg-[#F5F5F5] flex items-center rounded-tl-[15px] rounded-tr-[15px] relative border-b-[1px] border-[#A1A1A1]">
-        <div className="w-[40px] h-[40px] bg-gray-300 rounded-full ml-4"></div>
-        <div className="flex flex-col ml-4">
-          <h1 className="text-black font-roboto text-xl font-bold">
-            No conversation selected
-          </h1>
-          <h2 className="text-gray-500 text-sm font-roboto">
-            Select a chat to start messaging
-          </h2>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="w-full bg-[#F5F5F5] flex items-center rounded-tl-[15px] rounded-tr-[15px] relative p-4 mb-2 border-b-[1px] border-[#A1A1A1]">
-      <div className="w-[40px] h-[40px] bg-amber-300 rounded-full ml-4"></div>
+      {/* Profile Avatar */}
+      <div className="w-[40px] h-[40px] rounded-full bg-gray-200 flex items-center justify-center">
+        <UserIcon className="w-10 h-10 text-gray-500" />
+      </div>
+
+      {/* Name and Status */}
       <div className="flex flex-col ml-4">
         <h1 className="text-black font-roboto text-xl font-bold">
-          {data[0].sender}
+          {conversation.name}
         </h1>
         <h2 className="text-green-500 text-sm font-roboto">Available</h2>
       </div>
+
+      {/* Actions */}
       <div className="ml-auto mr-4 flex gap-4">
         <Pin />
-        <div onClick={handleClick}> <ThreeDots /> </div>
+        <div onClick={handleClick} className="cursor-pointer">
+          <ThreeDots />
+        </div>
+
+        {/* Dropdown */}
         {isOpen && (
           <div
             ref={dropdownRef}
@@ -87,5 +85,3 @@ function RightDashBoardHeader({ data }: RightHeaderProps) {
     </div>
   );
 }
-
-export default RightDashBoardHeader;
